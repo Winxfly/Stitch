@@ -8,7 +8,7 @@
 #include "tmx/Log.hpp"
 #include "tmx/tmx2box2d.hpp"
 
-sf::RenderWindow *wnd;
+sf::RenderWindow *window;
 tmx::MapLoader *mapLoader;
 
 int main() {
@@ -27,22 +27,22 @@ int main() {
 		return 1;
 	}
 
-	wnd = new sf::RenderWindow(sf::VideoMode(800, 600), "TEST");
-	while (wnd->isOpen()) {
+	window = new sf::RenderWindow(sf::VideoMode(800, 600), "TEST");
+	while (window->isOpen()) {
 		sf::Event e;
 
-		while (wnd->pollEvent(e)) {
+		while (window->pollEvent(e)) {
 			if (e.type == sf::Event::Closed) {
-				wnd->close();
+				window->close();
 			}
 		}
 
-		wnd->clear();
-		wnd->draw(*mapLoader);
-		wnd->display();
+		window->clear();
+		window->draw(*mapLoader);
+		window->display();
 	}
 	
-	delete wnd;
+	delete window;
 	delete mapLoader;
 	
 	return 0;
