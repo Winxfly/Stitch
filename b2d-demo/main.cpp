@@ -11,31 +11,43 @@
 sf::RenderWindow *window;
 tmx::MapLoader *mapLoader;
 
+float x = 0.0f;
+float y = 0.0f;
+
 int main() {
-	b2Vec2 gravity(0.0f, -10.0f);
+
+	//////////////////////////////////////
+	//      гравитация + платформа
+	b2Vec2 gravity(0.0f, -0.2f);  //гравитация
 	b2World world(gravity);
 
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0.0f, 10.0f);
+	groundBodyDef.position.Set(x, 0.0f);   // корды платформы
+	b2CircleShape groundBox;
+	groundBox.m_p.Set(200.0f, 200.0f);
+	groundBox.m_radius = 50.0f;
 
 	b2Body* groundBody = world.CreateBody(&groundBodyDef);
-
-	b2PolygonShape groundBox;
-	groundBox.SetAsBox(199.0f, 200.0f);
-
 	groundBody->CreateFixture(&groundBox, 0.0f);
+	  
+	///////////////////////////////////////
+	//         шар
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(200.0f, 400.0f);
+	bodyDef.position.Set(98.0f, 400.0f);
 	b2Body* body = world.CreateBody(&bodyDef);
 
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(1.0f, 1.0f);
+	b2CircleShape dynamicBox;
+	dynamicBox.m_p.Set(200.0f, 200.0f);
+	dynamicBox.m_radius = 50.0f;
+
+	///////////////////////////////////////
+	//         плотность, трение и кадры в секунду
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 1.0f;
+	fixtureDef.density = 10.0f;
 	fixtureDef.friction = 0.3f;
 
 	body->CreateFixture(&fixtureDef);
@@ -45,20 +57,23 @@ int main() {
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
-	/*for (int32 i = 0; i < 60; ++i)
-	{
-		world.Step(timeStep, velocityIterations, positionIterations);
-		b2Vec2 position = body->GetPosition();
-		float angle = body->GetAngle();
-		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
-	}*/
+	
+	////////////////////////////////////////////////
+	//               создание фигур
 
-	sf::RectangleShape rectangle(sf::Vector2f(70.f, 100.f));
+	sf::CircleShape rectangle;
 	rectangle.setFillColor(sf::Color(200, 180, 240));
+	rectangle.setRadius(50.0f);
 
-	sf::RectangleShape rectangle2(sf::Vector2f(199.0f, 200.0f));
+
+	sf::CircleShape rectangle2;
 	rectangle2.setFillColor(sf::Color(0, 0, 240));
-	rectangle2.setPosition(sf::Vector2f(0.0f, 10.0f));
+	rectangle2.setRadius(50.0f);
+	rectangle2.setPosition(sf::Vector2f(x, 0.0f));
+
+	//////////////////////////////////////////////////
+	//              открытие окна     
+
 
 	tmx::setLogLevel(tmx::Logger::Info | tmx::Logger::Error);
 
