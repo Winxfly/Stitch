@@ -27,7 +27,7 @@ int main() {
 		return 1;
 	}
 
-	window = new sf::RenderWindow(sf::VideoMode(800, 600), "TEST");
+	window = new sf::RenderWindow(sf::VideoMode(1024, 768), "TEST");
 	while (window->isOpen()) {
 		sf::Event e;
 
