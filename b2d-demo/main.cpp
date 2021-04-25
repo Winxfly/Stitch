@@ -11,27 +11,29 @@
 sf::RenderWindow *window;
 tmx::MapLoader *mapLoader;
 
+float xGround = 0.0f;
+
 int main() {
 	b2Vec2 gravity(0.0f, -10.0f);
 	b2World world(gravity);
 
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0.0f, 10.0f);
+	groundBodyDef.position.Set(xGround, 10.0f);
 
 	b2Body* groundBody = world.CreateBody(&groundBodyDef);
 
 	b2PolygonShape groundBox;
-	groundBox.SetAsBox(199.0f, 200.0f);
+	groundBox.SetAsBox(100.0f, 50.0f);
 
 	groundBody->CreateFixture(&groundBox, 0.0f);
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(200.0f, 400.0f);
+	bodyDef.position.Set(101.0f, 400.0f);
 	b2Body* body = world.CreateBody(&bodyDef);
 
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(1.0f, 1.0f);
+	dynamicBox.SetAsBox(35.0f, 50.0f);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
@@ -45,20 +47,13 @@ int main() {
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
-	/*for (int32 i = 0; i < 60; ++i)
-	{
-		world.Step(timeStep, velocityIterations, positionIterations);
-		b2Vec2 position = body->GetPosition();
-		float angle = body->GetAngle();
-		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
-	}*/
 
 	sf::RectangleShape rectangle(sf::Vector2f(70.f, 100.f));
 	rectangle.setFillColor(sf::Color(200, 180, 240));
 
-	sf::RectangleShape rectangle2(sf::Vector2f(199.0f, 200.0f));
+	sf::RectangleShape rectangle2(sf::Vector2f(200.0f, 100.0f));
 	rectangle2.setFillColor(sf::Color(0, 0, 240));
-	rectangle2.setPosition(sf::Vector2f(0.0f, 10.0f));
+	rectangle2.setPosition(sf::Vector2f(xGround, 768.0f - 10.0f - 100.0f));
 
 	tmx::setLogLevel(tmx::Logger::Info | tmx::Logger::Error);
 
@@ -86,7 +81,7 @@ int main() {
 		b2Vec2 position = body->GetPosition();
 		float angle = body->GetAngle();
 		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
-		rectangle.setPosition(sf::Vector2f(position.x, position.y));
+		rectangle.setPosition(sf::Vector2f(position.x, 768.0f - position.y - 100.0f));
 		rectangle.setRotation(angle);
 
 		window->clear();
