@@ -49,7 +49,7 @@ int main() {
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(550.0f, 400.0f);
+	bodyDef.position.Set(20.0f, 400.0f);
 	
 	b2Body* body = world.CreateBody(&bodyDef);
 
@@ -137,6 +137,11 @@ int main() {
 
 	sf::Texture Water;
 	Water.loadFromFile("water.jpg");
+	sf::Texture Zombie;
+	Zombie.loadFromFile("zombie.jpg");
+	sf::Texture Cripa;
+	Cripa.loadFromFile("cripa.png");
+
 
 	sf::CircleShape rectangle;
 	//rectangle.setFillColor(sf::Color(200, 180, 240));
@@ -156,13 +161,13 @@ int main() {
 	rectangle3.setTexture(&Water);
 
 	sf::RectangleShape rectangle4(sf::Vector2f(200.0f, 200.0f));
-	rectangle4.setFillColor(sf::Color(200, 180, 240));
+	rectangle4.setTexture(&Cripa);
 	rectangle4.setPosition(600.0f, WINDOW_HEIGHT - 500 - 150);
 	rectangle4.setOrigin(100.0f, 100.0f);
 	//rectangle3.setTexture(&Water);
 
 	sf::RectangleShape rectangle42(sf::Vector2f(100.0f, 100.0f));
-	rectangle42.setFillColor(sf::Color(100, 210, 140));
+	rectangle42.setTexture(&Zombie);
 	rectangle42.setPosition(490.0f, WINDOW_HEIGHT - 800);
 	rectangle42.setOrigin(50.0f, 50.0f);
 	//rectangle3.setTexture(&Water);
