@@ -49,7 +49,7 @@ int main() {
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(20.0f, 700.0f);
+	bodyDef.position.Set(550.0f, 400.0f);
 	
 	b2Body* body = world.CreateBody(&bodyDef);
 
@@ -65,7 +65,7 @@ int main() {
 
 	b2BodyDef thebox;
 	thebox.type = b2_dynamicBody;
-	thebox.position.Set(600.0f, 500.0f);
+	thebox.position.Set(600.0f, 200.0f);
 	
 	b2PolygonShape thedinamicbox;
 	thedinamicbox.SetAsBox(100.0f, 100.0f);
@@ -88,7 +88,7 @@ int main() {
 
 	b2BodyDef thebox2;
 	thebox2.type = b2_dynamicBody;
-	thebox2.position.Set(400.0f, 300.0f);
+	thebox2.position.Set(550.0f, 800.0f);
 
 	b2PolygonShape thedinamicbox2;
 	thedinamicbox2.SetAsBox(50.0f, 50.0f);
@@ -98,8 +98,8 @@ int main() {
 
 	b2FixtureDef fixtureDe2;
 	fixtureDe2.shape = &thedinamicbox2;
-	fixtureDe2.density = 1.0f;
-	fixtureDe2.friction = 0.3f;
+	fixtureDe2.density = 100.0f;
+	fixtureDe2.friction = 30.0f;
 
 	bodybox2->CreateFixture(&fixtureDe2);
 	/*b2Vec2 vertices[4];
@@ -158,11 +158,13 @@ int main() {
 	sf::RectangleShape rectangle4(sf::Vector2f(200.0f, 200.0f));
 	rectangle4.setFillColor(sf::Color(200, 180, 240));
 	rectangle4.setPosition(600.0f, WINDOW_HEIGHT - 500 - 150);
+	rectangle4.setOrigin(100.0f, 100.0f);
 	//rectangle3.setTexture(&Water);
 
 	sf::RectangleShape rectangle42(sf::Vector2f(100.0f, 100.0f));
 	rectangle42.setFillColor(sf::Color(100, 210, 140));
 	rectangle42.setPosition(490.0f, WINDOW_HEIGHT - 800);
+	rectangle42.setOrigin(50.0f, 50.0f);
 	//rectangle3.setTexture(&Water);
 
 	////////////////////////////////////////////////////
@@ -207,12 +209,12 @@ int main() {
 		angle = -angle;
 		angle2 = -angle2;
 		angle22 = -angle22;
-		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle22);
 		rectangle.setPosition(sf::Vector2f(position.x, WINDOW_HEIGHT - position.y - 50));
 		rectangle.setRotation(angle * DEG);
-		rectangle4.setPosition(sf::Vector2f(positions.x - 100, WINDOW_HEIGHT - positions.y - 150));
+		rectangle4.setPosition(sf::Vector2f(positions.x, WINDOW_HEIGHT - positions.y - 50));
 		rectangle4.setRotation(angle2 * DEG);
-		rectangle42.setPosition(sf::Vector2f(positions2.x - 50, WINDOW_HEIGHT - positions2.y - 100));
+		rectangle42.setPosition(sf::Vector2f(positions2.x, WINDOW_HEIGHT - positions2.y - 50));
 		rectangle42.setRotation(angle22 * DEG);
 			
 		/*if (Keyboard::isKeyPressed(Keyboard::Up)) {
