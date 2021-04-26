@@ -14,7 +14,7 @@ tmx::MapLoader *mapLoader;
 float xGround = 0.0f;
 
 int main() {
-	b2Vec2 gravity(0.0f, -10.0f);
+	b2Vec2 gravity(0.0f, -9.8f);
 	b2World world(gravity);
 
 	b2BodyDef groundBodyDef;
@@ -23,7 +23,7 @@ int main() {
 	b2Body* groundBody = world.CreateBody(&groundBodyDef);
 
 	b2PolygonShape groundBox;
-	groundBox.SetAsBox(150.0f, 250.0f);
+	groundBox.SetAsBox(100.0f, 50.0f);
 
 	groundBody->CreateFixture(&groundBox, 0.0f);
 
@@ -48,7 +48,6 @@ int main() {
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
-	//sf::View
 	sf::RectangleShape rectangle(sf::Vector2f(70.f, 100.f));
 	rectangle.setFillColor(sf::Color(200, 180, 240));
 	rectangle.setOrigin(35.0f, 50.0f);
@@ -83,9 +82,9 @@ int main() {
 		b2Vec2 position = body->GetPosition();
 		//body->SetAngularVelocity(-10.0f);
 		float angle = body->GetAngle();
-		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle * 57.29577);
 		rectangle.setPosition(sf::Vector2f(position.x, 768.0f - position.y - 50.0f));
-		rectangle.setRotation(angle * 57);
+		rectangle.setRotation(angle * 57.29577f);
 
 		window->clear();
 		//window->draw(*mapLoader);
