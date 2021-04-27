@@ -98,7 +98,7 @@ int main() {
 
 	b2FixtureDef fixtureDe2;
 	fixtureDe2.shape = &thedinamicbox2;
-	fixtureDe2.density = 100.0f;
+	fixtureDe2.density = 20.0f;
 	fixtureDe2.friction = 30.0f;
 
 	bodybox2->CreateFixture(&fixtureDe2);
@@ -119,7 +119,7 @@ int main() {
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 1.0f;
+	fixtureDef.density = 10.0f;
 	fixtureDef.friction = 0.3f;
 
 	body->CreateFixture(&fixtureDef);
@@ -222,10 +222,18 @@ int main() {
 		rectangle42.setPosition(sf::Vector2f(positions2.x, WINDOW_HEIGHT - positions2.y - 50));
 		rectangle42.setRotation(angle22 * DEG);
 			
-		/*if (Keyboard::isKeyPressed(Keyboard::Up)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+			body->ApplyForceToCenter(b2Vec2(-40000.0f, 0.0f), true);
 		
-		
-		}*/
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			body->ApplyForceToCenter(b2Vec2(40000.0f, 0.0f), true);
+
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			body->ApplyForceToCenter(b2Vec2(0.0f, 40000.0f), true);
+
+		}
 
 
 		/////////////////////////////////////////////////////////////
