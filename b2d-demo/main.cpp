@@ -9,10 +9,10 @@
 #include "tmx/Log.hpp"
 #include "tmx/tmx2box2d.hpp"
 
-sf::RenderWindow *window;
-tmx::MapLoader *mapLoader;
+sf::RenderWindow* window;
+tmx::MapLoader* mapLoader;
 
-
+int angleGround = 0;
 
 int main() {
 
@@ -37,27 +37,28 @@ int main() {
 	//                    платформа
 
 	b2BodyDef groundBod;
-	groundBod.position.Set(0.0f, 0.0f);
+	groundBod.position.Set(1280 / 2.0f, 0.0f);
 	b2PolygonShape bed;
-	bed.SetAsBox(4000.0f, 25.0f);
+	bed.SetAsBox(1280.0f / 2, 25.0f);
+
 
 	b2Body* groundBo = world.CreateBody(&groundBod);
 	groundBo->CreateFixture(&bed, 0.0f);
-	  
+	groundBo->SetTransform(groundBo->GetPosition(), angleGround / DEG);
 	//////////////////////////////////////////////////////
 	//                      шар
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(20.0f, 400.0f);
-	
+
 	b2Body* body = world.CreateBody(&bodyDef);
 
 	b2CircleShape dynamicBox;
 	dynamicBox.m_p.Set(0.0f, 0.0f);
-	
+
 	dynamicBox.m_radius = 25.0f;
-	
+
 
 	/////////////////////////////////////////////////////////
 	//                  коробка
@@ -66,10 +67,10 @@ int main() {
 	b2BodyDef thebox;
 	thebox.type = b2_dynamicBody;
 	thebox.position.Set(600.0f, 200.0f);
-	
+
 	b2PolygonShape thedinamicbox;
 	thedinamicbox.SetAsBox(100.0f, 100.0f);
-	
+
 	b2Body* bodybox = world.CreateBody(&thebox);
 	bodybox->CreateFixture(&thedinamicbox, 0.0f);
 
@@ -111,7 +112,7 @@ int main() {
 
 	b2PolygonShape polygon;
 	polygon.Set(vertices, 4);
-	
+
 	b2Body* groundB = world.CreateBody(polygon);
 	groundB->CreateFixture(&bed, 0.0f);*/
 	///////////////////////////////////////////////////////
@@ -129,7 +130,7 @@ int main() {
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
-	
+
 	/////////////////////////////////////////////////////
 	//               создание фигур
 
@@ -155,9 +156,11 @@ int main() {
 	rectangle2.setOrigin(50.0f, 50.0f);
 	rectangle2.setPosition(sf::Vector2f(0.0f, WINDOW_HEIGHT - 250.0f - 50));
 
-	sf::RectangleShape rectangle3(sf::Vector2f(1024.0f, 75.0f));
+	sf::RectangleShape rectangle3(sf::Vector2f(1280.0f, 50.0f));
 	//rectangle.setFillColor(sf::Color(200, 180, 240));
-	rectangle3.setPosition(0.0f, WINDOW_HEIGHT - 75);
+	rectangle3.setPosition(0.0f + 1280 / 2, WINDOW_HEIGHT - 50);
+	rectangle3.setRotation(-angleGround);
+	rectangle3.setOrigin(1280.0f / 2, 25);
 	rectangle3.setTexture(&Water);
 
 	sf::RectangleShape rectangle4(sf::Vector2f(200.0f, 200.0f));
@@ -208,23 +211,24 @@ int main() {
 		b2Vec2 position = body->GetPosition();
 		b2Vec2 positions = bodybox->GetPosition();
 		b2Vec2 positions2 = bodybox2->GetPosition();
+		b2Vec2 positions3 = groundBo->GetPosition();
 		float angle = body->GetAngle();
 		float angle2 = bodybox->GetAngle();
 		float angle22 = bodybox2->GetAngle();
 		angle = -angle;
 		angle2 = -angle2;
 		angle22 = -angle22;
-		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle22);
+		printf("%4.2f %4.2f %4.2f\n", positions3.x, positions3.y, angle22);
 		rectangle.setPosition(sf::Vector2f(position.x, WINDOW_HEIGHT - position.y - 50));
 		rectangle.setRotation(angle * DEG);
 		rectangle4.setPosition(sf::Vector2f(positions.x, WINDOW_HEIGHT - positions.y - 50));
 		rectangle4.setRotation(angle2 * DEG);
 		rectangle42.setPosition(sf::Vector2f(positions2.x, WINDOW_HEIGHT - positions2.y - 50));
 		rectangle42.setRotation(angle22 * DEG);
-			
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			body->ApplyForceToCenter(b2Vec2(-40000.0f, 0.0f), true);
-		
+
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 			body->ApplyForceToCenter(b2Vec2(40000.0f, 0.0f), true);
@@ -249,9 +253,9 @@ int main() {
 		window->draw(rectangle42);
 		window->display();
 	}
-	
+
 	delete window;
 	delete mapLoader;
-	
+
 	return 0;
 }
