@@ -94,7 +94,7 @@ int main() {
 		rectangle.setRotation(angle * DEG * (-1));
 
 		window->clear();
-		//window->draw(*mapLoader);
+		window->draw(*mapLoader);
 		window->draw(rectangle2);
 		window->draw(rectangle);
 		window->display();
