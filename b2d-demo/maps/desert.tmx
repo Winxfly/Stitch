@@ -39,8 +39,8 @@
    </properties>
   </object>
   <object id="2" x="334" y="756" width="61" height="50"/>
-  <object id="3" type="solid" x="932" y="243">
-   <polygon points="0,0 -9,63 261,-4 165,-85 -40,-143"/>
+  <object id="3" type="solid" x="923.459" y="243">
+   <polygon points="-40.5696,5.33811 -9,63 225.768,4.54097 165,-85 -40,-143"/>
   </object>
   <object id="4" name="ellipse" x="385" y="58" width="88" height="63">
    <ellipse/>
