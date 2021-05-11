@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <iostream>
+#include <time.h>
 
 #include "box2d/box2d.h"
 #include "SFML/Graphics.hpp"
@@ -8,16 +10,18 @@
 #include "tmx/tmx2box2d.hpp"
 
 #include "Constants.h"
+#include "Hero.h"
 
 sf::RenderWindow *window;
 tmx::MapLoader *mapLoader;
-
-const float DEG = 57.29577f;
 
 float xGround = 0.0f;
 float angleGround = 49.0f;
 
 int main() {
+	srand(time(0));
+	Player hero;
+
 	b2Vec2 gravity(0.0f, -9.81f);
 	b2World world(gravity);
 
@@ -77,12 +81,33 @@ int main() {
 	}
 
 	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "TEST");
-	while (window->isOpen()) {
-		sf::Event e;
 
+	sf::Clock clock;
+	while (window->isOpen()) {
+
+		float time = clock.getElapsedTime().asMicroseconds();
+		clock.restart();
+		time = time / 500;
+
+		sf::Event e;
 		while (window->pollEvent(e)) {
 			if (e.type == sf::Event::Closed) {
 				window->close();
+			}
+		}
+
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::A)))) {
+			hero.dx = -0.1;
+		}
+
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || (sf::Keyboard::isKeyPressed(sf::Keyboard::D)))) {
+			hero.dx = 0.1;
+		}
+
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || (sf::Keyboard::isKeyPressed(sf::Keyboard::W)))) {
+			if (hero.onGround) {
+				hero.dy = -0.4;
+				hero.onGround = false;
 			}
 		}
 
@@ -94,10 +119,21 @@ int main() {
 		rectangle.setPosition(sf::Vector2f(position.x, 768.0f - position.y - 50.0f));
 		rectangle.setRotation(angle * DEG * (-1));
 
+		hero.update(time);
+		if (hero.rect.left > WINDOW_WIDTH / 2) {
+			hero.offsetX = hero.rect.left - WINDOW_WIDTH / 2;
+		}
+		if (hero.rect.top < WINDOW_HEIGHT / 2) {
+			hero.offsetY = hero.rect.top - WINDOW_HEIGHT / 2;
+		}
+
+		
+
 		window->clear();
 		window->draw(*mapLoader);
 		window->draw(rectangle2);
 		window->draw(rectangle);
+		window->draw(hero.sprite);
 		window->display();
 	}
 
