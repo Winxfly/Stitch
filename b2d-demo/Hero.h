@@ -12,20 +12,47 @@ public:
 	float offsetX = 0;
 	float offsetY = 0;
 
-	sf::FloatRect rect;
 	bool onGround;
-	sf::Sprite sprite;
 	float currentFrame;
+
+	sf::FloatRect rect;
+	sf::Sprite sprite;
 	sf::Texture heroTexture;
 
+	b2BodyDef bodyDef;
+	b2Vec2 position;
+
 	Player() {
+		//BOX2D
+		b2Vec2 gravity(0.0f, -9.81f);
+		b2World world(gravity);
+
+		bodyDef.type = b2_dynamicBody;
+		b2Body* body = world.CreateBody(&bodyDef);
+
+		b2PolygonShape dynamicBox;
+		dynamicBox.SetAsBox(32.0f / 2, 53.0f / 2);
+
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &dynamicBox;
+		fixtureDef.density = 1.0f;
+		fixtureDef.friction = 100.3f;
+		body->CreateFixture(&fixtureDef);
+
+		position = body->GetPosition();
+
+		//SFML
 		heroTexture.loadFromFile("mario.png");
 		sprite.setTexture(heroTexture);
+		sprite.setOrigin(32.0f / 2, 53.0f / 2);
 
 		rect = sf::FloatRect(200, 200, 32, 53);
 
-		dx = dy = 0;
+		dx = 0;
+		dy = 0;
 		currentFrame = 0;
+
+		sprite.setTextureRect(sf::IntRect(32 * int(currentFrame) + 32, 0, -32, 53));
 	}
 
 	void update(float time) {
@@ -55,7 +82,9 @@ public:
 			sprite.setTextureRect(sf::IntRect(32 * int(currentFrame) + 32, 0, -32, 53));
 		}
 
-		sprite.setPosition(rect.left - offsetX, rect.top - offsetY);
+		bodyDef.position.Set(rect.left + 700.0f - offsetX, rect.top + 600.0f - offsetY);
+		sprite.setPosition(position.x + 32.0f / 2, WINDOW_HEIGHT / 2 - position.y - 53.0f / 2);
+		//sprite.setPosition(rect.left - offsetX, rect.top - offsetY);
 		dx = 0;
 	}
 

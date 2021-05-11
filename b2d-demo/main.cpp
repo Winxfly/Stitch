@@ -27,8 +27,6 @@ int main() {
 
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(500, 0.0f);
-
-
 	b2Body* groundBody = world.CreateBody(&groundBodyDef);
 	b2PolygonShape groundBox;
 	groundBox.SetAsBox(500.0f, 50.0f);
@@ -80,6 +78,19 @@ int main() {
 		return 1;
 	}
 
+	sf::Texture mapLayerTexture;
+	/*mapLayerTexture.loadFromFile("maps//desert.tmx");
+
+	if (!mapLayerTexture.loadFromFile("maps/desert.tmx")) {
+		std::cout << "ERROR LOADING MAP TEXTURE\n";
+
+		system("pause");
+		return 1;
+	}*/
+
+	sf::RectangleShape mapLayer(sf::Vector2f(MAP_SIZE_WIDTH, MAP_SIZE_HEIGHT));
+	mapLayer.setTexture(&mapLayerTexture);
+
 	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "TEST");
 
 	sf::Clock clock;
@@ -127,10 +138,12 @@ int main() {
 			hero.offsetY = hero.rect.top - WINDOW_HEIGHT / 2;
 		}
 
+		mapLayer.setPosition(sf::Vector2f(TILE_SIZE - hero.offsetX, TILE_SIZE - hero.offsetY));
+
 		
 
 		window->clear();
-		window->draw(*mapLoader);
+		window->draw(mapLayer);
 		window->draw(rectangle2);
 		window->draw(rectangle);
 		window->draw(hero.sprite);
