@@ -1,12 +1,13 @@
 #include <stdio.h>
 
 #include "box2d/box2d.h"
-
 #include "SFML/Graphics.hpp"
 
 #include "tmx/MapLoader.hpp"
 #include "tmx/Log.hpp"
 #include "tmx/tmx2box2d.hpp"
+
+#include "Constants.h"
 
 sf::RenderWindow *window;
 tmx::MapLoader *mapLoader;
@@ -75,7 +76,7 @@ int main() {
 		return 1;
 	}
 
-	window = new sf::RenderWindow(sf::VideoMode(1024, 768), "TEST");
+	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "TEST");
 	while (window->isOpen()) {
 		sf::Event e;
 

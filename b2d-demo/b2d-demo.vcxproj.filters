@@ -13,10 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\Base">
+      <UniqueIdentifier>{984c6f89-51d6-4995-a0a9-697ea190da25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Logics">
+      <UniqueIdentifier>{daf9259d-84c8-4500-bb72-1f6bd5506a1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\GameStates">
+      <UniqueIdentifier>{159b9356-e82e-4e0a-9ed7-05da131aa64a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Constants.h">
+      <Filter>Исходные файлы\Base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
