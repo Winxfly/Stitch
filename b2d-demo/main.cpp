@@ -102,13 +102,13 @@ int main() {
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::A)))) {
 			hero.dx = -0.1;
-			camX = 0.1 * time;
+			camX = -0.1 * time;
 			view.move(camX, 0);
 		}
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || (sf::Keyboard::isKeyPressed(sf::Keyboard::D)))) {
 			hero.dx = 0.1;
-			camX = -0.1 * time;
+			camX = 0.1 * time;
 			view.move(camX, 0);
 		}
 

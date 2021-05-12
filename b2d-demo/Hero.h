@@ -83,7 +83,7 @@ public:
 		}
 
 		bodyDef.position.Set(rect.left + 700.0f - offsetX, rect.top + 600.0f - offsetY);
-		sprite.setPosition(position.x + 32.0f / 2, WINDOW_HEIGHT / 2 - position.y - 53.0f / 2);
+		sprite.setPosition(rect.left - position.x + 32.0f / 2, WINDOW_HEIGHT / 2 - rect.top - position.y - 53.0f / 2);
 		//sprite.setPosition(rect.left - offsetX, rect.top - offsetY);
 		dx = 0;
 	}
