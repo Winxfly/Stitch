@@ -18,6 +18,9 @@ tmx::MapLoader *mapLoader;
 float xGround = 0.0f;
 float angleGround = 49.0f;
 
+float camX = 0;
+float camY = 0;
+
 int main() {
 	srand(time(0));
 	Player hero;
@@ -78,18 +81,8 @@ int main() {
 		return 1;
 	}
 
-	sf::Texture mapLayerTexture;
-	/*mapLayerTexture.loadFromFile("maps//desert.tmx");
-
-	if (!mapLayerTexture.loadFromFile("maps/desert.tmx")) {
-		std::cout << "ERROR LOADING MAP TEXTURE\n";
-
-		system("pause");
-		return 1;
-	}*/
-
-	sf::RectangleShape mapLayer(sf::Vector2f(MAP_SIZE_WIDTH, MAP_SIZE_HEIGHT));
-	mapLayer.setTexture(&mapLayerTexture);
+	sf::View view(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
+	view.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 
 	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "TEST");
 
@@ -109,17 +102,29 @@ int main() {
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::A)))) {
 			hero.dx = -0.1;
+			camX = 0.1 * time;
+			view.move(camX, 0);
 		}
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || (sf::Keyboard::isKeyPressed(sf::Keyboard::D)))) {
 			hero.dx = 0.1;
+			camX = -0.1 * time;
+			view.move(camX, 0);
 		}
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || (sf::Keyboard::isKeyPressed(sf::Keyboard::W)))) {
+			camY = -0.1 * time;
+			view.move(0, camY);
 			if (hero.onGround) {
 				hero.dy = -0.4;
 				hero.onGround = false;
 			}
+		}
+
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || (sf::Keyboard::isKeyPressed(sf::Keyboard::S)))) {
+			hero.dy = -0.1;
+			camY = 0.1 * time;
+			view.move(0, camY);
 		}
 
 		world.Step(timeStep, velocityIterations, positionIterations);
@@ -138,15 +143,16 @@ int main() {
 			hero.offsetY = hero.rect.top - WINDOW_HEIGHT / 2;
 		}
 
-		mapLayer.setPosition(sf::Vector2f(TILE_SIZE - hero.offsetX, TILE_SIZE - hero.offsetY));
-
-		
-
+		// sfml draw arc
 		window->clear();
-		window->draw(mapLayer);
+		window->setView(view);
+		window->draw(*mapLoader);
 		window->draw(rectangle2);
+
 		window->draw(rectangle);
 		window->draw(hero.sprite);
+
+
 		window->display();
 	}
 
