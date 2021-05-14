@@ -16,17 +16,18 @@ sf::RenderWindow *window;
 tmx::MapLoader *mapLoader;
 
 float xGround = 0.0f;
-float angleGround = 49.0f;
+float angleGround = 0.0f;
 
 float camX = 0;
 float camY = 0;
 
 int main() {
 	srand(time(0));
-	Player hero;
 
 	b2Vec2 gravity(0.0f, -9.81f);
 	b2World world(gravity);
+
+	Player hero(&world);
 
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(500, 0.0f);
@@ -39,7 +40,7 @@ int main() {
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(800.0f, 500.0f);
+	bodyDef.position.Set(780.0f, 500.0f);
 	b2Body* body = world.CreateBody(&bodyDef);
 	body->SetTransform(body->GetPosition(), 45.0f / DEG);
 
@@ -49,7 +50,7 @@ int main() {
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 100.3f;
+	fixtureDef.friction = 3.3f;
 
 	body->CreateFixture(&fixtureDef);
 
@@ -68,6 +69,10 @@ int main() {
 	rectangle2.setOrigin(500.0f, 50.0f);
 	rectangle2.setPosition(sf::Vector2f(xGround + 500, 768.0f - 50.0f));
 	rectangle2.setRotation(angleGround  * (-1));
+
+	sf::RectangleShape rectangle3(sf::Vector2f(32.0f, 53.0f));
+	rectangle3.setFillColor(sf::Color(100, 0, 240));
+	rectangle3.setOrigin(32.0f / 2, 53.0f / 2);
 
 	tmx::setLogLevel(tmx::Logger::Info | tmx::Logger::Error);
 
@@ -93,6 +98,9 @@ int main() {
 		clock.restart();
 		time = time / 500;
 
+		b2Vec2 positionHero = hero.body->GetPosition();
+		rectangle3.setPosition(sf::Vector2f(positionHero.x, WINDOW_HEIGHT - positionHero.y - 50));
+
 		sf::Event e;
 		while (window->pollEvent(e)) {
 			if (e.type == sf::Event::Closed) {
@@ -103,6 +111,7 @@ int main() {
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::A)))) {
 			hero.dx = -0.1;
 			camX = -0.1 * time;
+			//hero.bodyDef.position.Set(positionHero.x -= 0.1 * time, positionHero.y);
 			view.move(camX, 0);
 		}
 
@@ -115,10 +124,10 @@ int main() {
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || (sf::Keyboard::isKeyPressed(sf::Keyboard::W)))) {
 			camY = -0.1 * time;
 			view.move(0, camY);
-			if (hero.onGround) {
+			/*if (hero.onGround) {
 				hero.dy = -0.4;
 				hero.onGround = false;
-			}
+			}*/
 		}
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || (sf::Keyboard::isKeyPressed(sf::Keyboard::S)))) {
@@ -135,21 +144,22 @@ int main() {
 		rectangle.setPosition(sf::Vector2f(position.x, 768.0f - position.y - 50.0f));
 		rectangle.setRotation(angle * DEG * (-1));
 
-		hero.update(time);
-		if (hero.rect.left > WINDOW_WIDTH / 2) {
+		hero.update(time, positionHero);
+
+		/*if (hero.rect.left > WINDOW_WIDTH / 2) {
 			hero.offsetX = hero.rect.left - WINDOW_WIDTH / 2;
 		}
-		if (hero.rect.top < WINDOW_HEIGHT / 2) {
+		if (hero.rect.top < WINDOW_HEIGHT) {
 			hero.offsetY = hero.rect.top - WINDOW_HEIGHT / 2;
-		}
+		}*/
 
 		// sfml draw arc
 		window->clear();
 		window->setView(view);
 		window->draw(*mapLoader);
 		window->draw(rectangle2);
-
 		window->draw(rectangle);
+		window->draw(rectangle3);
 		window->draw(hero.sprite);
 
 
