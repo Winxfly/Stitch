@@ -68,7 +68,7 @@ public:
 
 		
 		rect.top += dy * time;
-		onGround = false;
+		//onGround = false;
 
 		
 

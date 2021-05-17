@@ -46,7 +46,7 @@ int main() {
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(800.0f, 500.0f);
+	bodyDef.position.Set(780.0f, 500.0f);
 	b2Body* body = world.CreateBody(&bodyDef);
 	body->SetFixedRotation(true);
 
@@ -56,7 +56,7 @@ int main() {
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 100.3f;
+	fixtureDef.friction = 3.3f;
 
 	body->CreateFixture(&fixtureDef);
 
@@ -107,6 +107,9 @@ int main() {
 		clock.restart();
 		time = time / 500;
 
+		b2Vec2 positionHero = hero.body->GetPosition();
+		rectangle3.setPosition(sf::Vector2f(positionHero.x, WINDOW_HEIGHT - positionHero.y - 50));
+
 		sf::Event e;
 		while (window->pollEvent(e)) {
 			if (e.type == sf::Event::Closed) {
@@ -153,10 +156,10 @@ int main() {
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || (sf::Keyboard::isKeyPressed(sf::Keyboard::W)))) {
 			camY = -0.1 * time;
 			view.move(0, camY);
-			if (hero.onGround) {
+			/*if (hero.onGround) {
 				hero.dy = -0.4;
 				hero.onGround = false;
-			}
+			}*/
 		}
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || (sf::Keyboard::isKeyPressed(sf::Keyboard::S)))) {
