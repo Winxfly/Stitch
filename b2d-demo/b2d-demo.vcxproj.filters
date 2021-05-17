@@ -35,5 +35,8 @@
     <ClInclude Include="Hero.h">
       <Filter>Исходные файлы\Logics</Filter>
     </ClInclude>
+    <ClInclude Include="MapLoader.h">
+      <Filter>Исходные файлы\Logics</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

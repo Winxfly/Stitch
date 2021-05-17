@@ -9,39 +9,46 @@
 #include "tmx/Log.hpp"
 #include "tmx/tmx2box2d.hpp"
 
+
 #include "Constants.h"
 #include "Hero.h"
+#include "MapLoader.h"
 
 sf::RenderWindow *window;
 tmx::MapLoader *mapLoader;
 
+
+float dd = 0;
+
 float xGround = 0.0f;
-float angleGround = 49.0f;
+float angleGround = 0.0f;
 
 float camX = 0;
 float camY = 0;
 
 int main() {
 	srand(time(0));
-	Player hero;
+	
 
-	b2Vec2 gravity(0.0f, -9.81f);
+	b2Vec2 gravity(0.0f, -0.81f);
 	b2World world(gravity);
 
+	Player hero(&world);
+	
+	
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(500, 0.0f);
+	groundBodyDef.position.Set(500, 100.0f);
 	b2Body* groundBody = world.CreateBody(&groundBodyDef);
 	b2PolygonShape groundBox;
 	groundBox.SetAsBox(500.0f, 50.0f);
-	groundBody->CreateFixture(&groundBox, 1.0f);
+	groundBody->CreateFixture(&groundBox, 0.0f);
 
-	groundBody->SetTransform(groundBody->GetPosition(), angleGround / DEG);
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(800.0f, 500.0f);
 	b2Body* body = world.CreateBody(&bodyDef);
-	body->SetTransform(body->GetPosition(), 45.0f / DEG);
+	body->SetFixedRotation(true);
 
 	b2PolygonShape dynamicBox;
 	dynamicBox.SetAsBox(35.0f, 50.0f);
@@ -60,14 +67,17 @@ int main() {
 
 	sf::RectangleShape rectangle(sf::Vector2f(70.f, 100.f));
 	rectangle.setFillColor(sf::Color(200, 180, 240));
-	rectangle.setOrigin(35.0f, 50.0f);
-	rectangle.setRotation(-45.0f);
+	//rectangle.setOrigin(35.0f, 50.0f);
+	
 
 	sf::RectangleShape rectangle2(sf::Vector2f(1000.0f, 100.0f));
 	rectangle2.setFillColor(sf::Color(0, 0, 240));
-	rectangle2.setOrigin(500.0f, 50.0f);
-	rectangle2.setPosition(sf::Vector2f(xGround + 500, 768.0f - 50.0f));
-	rectangle2.setRotation(angleGround  * (-1));
+	//rectangle2.setOrigin(500.0f, 50.0f);
+	rectangle2.setPosition(sf::Vector2f(0, WINDOW_HEIGHT - 100));
+
+	sf::RectangleShape rectangle3(sf::Vector2f(32.0f, 53.0f));
+	rectangle3.setFillColor(sf::Color(100, 0, 240));
+	
 
 	tmx::setLogLevel(tmx::Logger::Info | tmx::Logger::Error);
 
@@ -81,11 +91,15 @@ int main() {
 		return 1;
 	}
 
+	Map map(&world, mapLoader);
+	
+	
 	sf::View view(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
 	view.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 
 	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "TEST");
 
+	
 	sf::Clock clock;
 	while (window->isOpen()) {
 
@@ -100,18 +114,42 @@ int main() {
 			}
 		}
 
+		b2Vec2 positions = hero.bodyM->GetPosition();
+
+		rectangle3.setPosition(sf::Vector2f(positions.x, WINDOW_HEIGHT - positions.y));
+
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::A)))) {
 			hero.dx = -0.1;
-			camX = -0.1 * time;
+			
+			hero.bodyM->SetLinearVelocity(b2Vec2(-5.0f, 0));
+			if (positions.x - dd < WINDOW_WIDTH / 2 && dd >= 0) {
+				camX = -0.1 * time;
+			}
+			
 			view.move(camX, 0);
+			dd += camX;
+			camX = 0;
 		}
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || (sf::Keyboard::isKeyPressed(sf::Keyboard::D)))) {
 			hero.dx = 0.1;
-			camX = 0.1 * time;
+			//hero.bodyM->SetLinearVelocity(b2Vec2(5.0f, 0));
+			//hero.bodyM->ApplyForceToCenter(b2Vec2(50.0f, 0), false);
+			hero.bodyM->SetLinearVelocity(b2Vec2(5.0f, 0));
+			sf::Vector2f position = hero.sprite.getPosition();
+			
+			if (positions.x - dd > WINDOW_WIDTH / 2) {
+				camX = 0.1 * time;
+			}
+			
+			
+		
 			view.move(camX, 0);
+			dd += camX;
+			camX = 0;
+			
 		}
-
+		
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || (sf::Keyboard::isKeyPressed(sf::Keyboard::W)))) {
 			camY = -0.1 * time;
 			view.move(0, camY);
@@ -122,35 +160,45 @@ int main() {
 		}
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || (sf::Keyboard::isKeyPressed(sf::Keyboard::S)))) {
-			hero.dy = -0.1;
+		//	hero.dy = 0.1;
 			camY = 0.1 * time;
 			view.move(0, camY);
 		}
+		
 
 		world.Step(timeStep, velocityIterations, positionIterations);
-		b2Vec2 position = body->GetPosition();
+		
+		
 		//body->SetAngularVelocity(-10.0f);
 		float angle = body->GetAngle();
-		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle * DEG);
-		rectangle.setPosition(sf::Vector2f(position.x, 768.0f - position.y - 50.0f));
-		rectangle.setRotation(angle * DEG * (-1));
-
-		hero.update(time);
-		if (hero.rect.left > WINDOW_WIDTH / 2) {
-			hero.offsetX = hero.rect.left - WINDOW_WIDTH / 2;
-		}
-		if (hero.rect.top < WINDOW_HEIGHT / 2) {
-			hero.offsetY = hero.rect.top - WINDOW_HEIGHT / 2;
-		}
+		b2Vec2 position = body->GetPosition();
+	
+		rectangle.setPosition(sf::Vector2f(position.x, WINDOW_HEIGHT - position.y));
+		
+		
+		
+		
+		/*for (int i = 0; i <= 4; i++) {
+			b2Vec2 positionBlock = map.bodyM2[i]->GetPosition();
+			map.rectangle4[i].setPosition(sf::Vector2f(positionBlock.x, WINDOW_HEIGHT - positionBlock.y));
+			map.updateMap(time, positionBlock);
+		}*/
+		
+		hero.update(time, positions);
 
 		// sfml draw arc
 		window->clear();
 		window->setView(view);
 		window->draw(*mapLoader);
 		window->draw(rectangle2);
-
+		window->draw(rectangle3);
 		window->draw(rectangle);
+		for (int i = 0; i <= 4; i++) {
+			window->draw(map.rectangle4[i]);
+		}
+		window->draw(map.sprites);
 		window->draw(hero.sprite);
+		
 
 
 		window->display();
