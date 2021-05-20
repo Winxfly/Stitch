@@ -22,16 +22,16 @@ public:
 
 	b2BodyDef bodyDefM;
 	b2Body* bodyM;*/
-	sf::FloatRect recto;
+	sf::FloatRect recto[3];
 	sf::Sprite sprites;
 	sf::Texture heroTextures;
 	float currentFrame = 0;
 	b2BodyDef bodyDefM2;
-	b2Body* bodyM2[5];
-	sf::RectangleShape rectangle4[5];
+	b2Body* bodyM2[3];
+	sf::RectangleShape rectangle4[3];
 	//std::vector<sf::RectangleShape> rectangles;
 
-	
+
 	tmx::MapObject* mapObj;
 
 
@@ -39,15 +39,6 @@ public:
 		//BOX2D
 
 
-
-
-
-		std::vector<std::unique_ptr<sf::Shape>> debugBoxes;
-		std::vector<DebugShape> debugShapes;
-		std::map<b2Body*, sf::CircleShape> dynamicShapes; //we can use raw pointers because box2D manages its own memory
-
-		//create a body creator
-		tmx::BodyCreator bodyCreator;
 
 		const std::vector<tmx::MapLayer>& layers = mapLoader->getLayers();
 		int score = 0;
@@ -58,24 +49,25 @@ public:
 			//if (l.name == "test") {
 			for (const auto& o : l.objects)
 			{
-				
+
 				std::string fc = o.getName();
-				
+
 
 				if (fc == "test") {
-				
+
 
 					mapObj = new tmx::MapObject(o);
-					recto = sf::FloatRect(mapObj->getAABB());
 
-					//std::cout << recto.left << " | " << recto.top << "\n";
+					recto[score] = sf::FloatRect(mapObj->getAABB());
+
+					//std::cout << recto.left << " 1| " << recto.top << "\n";
 					//std::cout << recto.width << " | " << recto.height << "\n";
 
 					bodyDefM2.type = b2_dynamicBody;
-					bodyDefM2.position.Set(recto.left, WINDOW_HEIGHT - recto.top);
+					bodyDefM2.position.Set(recto[score].left + (recto[score].width / 2), WINDOW_HEIGHT - recto[score].top - (recto[score].height / 2));
 
 					b2PolygonShape dynamicMario2;
-					dynamicMario2.SetAsBox(recto.width / 2.54, recto.height / 2.54);
+					dynamicMario2.SetAsBox(recto[score].width / 2, recto[score].height / 2);
 
 					bodyM2[score] = world->CreateBody(&bodyDefM2);
 					bodyM2[score]->SetFixedRotation(true);
@@ -89,22 +81,24 @@ public:
 
 					b2Vec2 positionLocal = bodyM2[score]->GetPosition();
 
-					//std::cout << positionLocal.x << " | " << positionLocal.y << "\n";
+					//std::cout << positionLocal.x << " 2| " << positionLocal.y << "\n";
 
 					//rectangles.emplace_back(sf::Vector2f(recto.width, recto.height));
 
-					
-						
 
-					rectangle4[score].setSize(sf::Vector2f(recto.width, recto.height));
+
+
+					rectangle4[score].setSize(sf::Vector2f(recto[score].width, recto[score].height));
 					rectangle4[score].setFillColor(sf::Color(100, 0, 240));
-					rectangle4[score].setPosition(sf::Vector2f(positionLocal.x, WINDOW_HEIGHT - positionLocal.y));
-					//rectangle4.setOrigin(recto.width / 2, recto.height / 2);
-					
+					rectangle4[score].setOrigin(recto[score].width / 2, recto[score].height / 2);
+					rectangle4[score].setPosition(sf::Vector2f(positionLocal.x, WINDOW_HEIGHT - positionLocal.y - (recto[score].height / 2)));
+
+
+
 
 					heroTextures.loadFromFile("mario2.png");
 					sprites.setTexture(heroTextures);
-					
+
 
 					sprites.setTextureRect(sf::IntRect(32 * int(currentFrame) + 32, 0, -32, 53));
 
@@ -151,19 +145,19 @@ public:
 					}*/
 				}
 				else if (fc == "test2") {
-				
+
 
 					mapObj = new tmx::MapObject(o);
-					recto = sf::FloatRect(mapObj->getAABB());
+					recto[score] = sf::FloatRect(mapObj->getAABB());
 
-					//std::cout << recto.left << " | " << recto.top << "\n";
+					std::cout << recto[score].left << " 1| " << recto[score].top << "\n";
 					//std::cout << recto.width << " | " << recto.height << "\n";
 
 					bodyDefM2.type = b2_staticBody;
-					bodyDefM2.position.Set(recto.left, WINDOW_HEIGHT - recto.top);
+					bodyDefM2.position.Set(recto[score].left + (recto[score].width / 2), WINDOW_HEIGHT - recto[score].top - (recto[score].height / 2));
 
 					b2PolygonShape dynamicMario2;
-					dynamicMario2.SetAsBox(recto.width / 2.54, recto.height / 2.54);
+					dynamicMario2.SetAsBox(recto[score].width / 2, recto[score].height / 2);
 
 					bodyM2[score] = world->CreateBody(&bodyDefM2);
 					bodyM2[score]->SetFixedRotation(true);
@@ -177,35 +171,32 @@ public:
 
 					b2Vec2 positionLocal = bodyM2[score]->GetPosition();
 
-					//std::cout << positionLocal.x << " | " << positionLocal.y << "\n";
+					std::cout << positionLocal.x << " 2| " << positionLocal.y << "\n";
 
 					//rectangles.emplace_back(sf::Vector2f(recto.width, recto.height));
 
 
 
 
-					rectangle4[score].setSize(sf::Vector2f(recto.width, recto.height));
-					rectangle4[score].setFillColor(sf::Color(100, 0, 240));
-					rectangle4[score].setPosition(sf::Vector2f(positionLocal.x, WINDOW_HEIGHT - positionLocal.y));
-					//rectangle4.setOrigin(recto.width / 2, recto.height / 2);
+					rectangle4[score].setSize(sf::Vector2f(recto[score].width, recto[score].height));
+					//rectangle4[score].setFillColor(sf::Color(100, 0, 240));
+					rectangle4[score].setPosition(sf::Vector2f(positionLocal.x, WINDOW_HEIGHT - positionLocal.y - (recto[score].height / 2)));
+					rectangle4[score].setOrigin(recto[score].width / 2, recto[score].height / 2);
 
 
 					heroTextures.loadFromFile("mario2.png");
-					sprites.setTexture(heroTextures);
 
-
-					sprites.setTextureRect(sf::IntRect(32 * int(currentFrame) + 32, 0, -32, 53));
 
 					score++;
-				
-				
+
+
 				}
 			}
 			//}
 		}
 	}
 
-	void updateMap(float time, b2Vec2 positionBlock) {
+	void updateMap(float time, b2Body* bodyM2[2]) {
 
 
 
@@ -217,18 +208,20 @@ public:
 		}
 
 
-		
 
-		sprites.setPosition(positionBlock.x, WINDOW_HEIGHT - positionBlock.y);
-		for (int i = 0; i <= 4; i++) {
-			//rectangle4[i].setPosition(sf::Vector2f(positionBlock.x, WINDOW_HEIGHT - positionBlock.y));
+
+
+		for (int i = 0; i <= 2; i++) {
+			b2Vec2 positionBlock = bodyM2[i]->GetPosition();
+			//sprites.setPosition(positionBlock.x, WINDOW_HEIGHT - positionBlock.y);
+			rectangle4[i].setPosition(sf::Vector2f(positionBlock.x, WINDOW_HEIGHT - positionBlock.y));
 		}
 		//std::cout << positionBlock.x << " | " << WINDOW_HEIGHT - positionBlock.y << "\n";
 
-		
+
 	}
 
 
 
-	
+
 };

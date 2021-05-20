@@ -21,36 +21,36 @@ public:
 
 	b2BodyDef bodyDefM;
 	b2Body* bodyM;
-	
+
 
 	Player(b2World* world) {
 		//BOX2D
-		
-		
-		bodyDefM.type = b2_dynamicBody;	
-		bodyDefM.position.Set(150.0f, 600.0f);
+
+
+		bodyDefM.type = b2_dynamicBody;
+		bodyDefM.position.Set(150.0f + (32 / 2), 600.0f - (53.0f / 2.0f));
 
 		b2PolygonShape dynamicMario;
-		dynamicMario.SetAsBox(32.0f / 2.54, 53.0f / 2.54);
+		dynamicMario.SetAsBox(32.0f / 2, 53.0f / 2);
 
 		bodyM = world->CreateBody(&bodyDefM);
 		bodyM->SetFixedRotation(true);
-		
+
 		b2FixtureDef fixtureDefM;
-		
+
 		fixtureDefM.shape = &dynamicMario;
 		fixtureDefM.density = 10.0f;
 		fixtureDefM.friction = 1.3f;
 		bodyM->CreateFixture(&fixtureDefM);
 
-		
+
 		//SFML
 		heroTexture.loadFromFile("mario2.png");
 		sprite.setTexture(heroTexture);
-		//sprite.setOrigin(32.0f, 53.0f);
+		sprite.setOrigin(32.0f / 2, 53.0f / 2);
 
 		//rect = sf::FloatRect(0, 0, 32, 53);
-		
+
 		dx = 0;
 		dy = 0;
 		currentFrame = 0;
@@ -60,17 +60,17 @@ public:
 
 	void update(float time, b2Vec2 position) {
 
-		
-		
-		
+
+
+
 
 		rect.left += dx * time;
 
-		
+
 		rect.top += dy * time;
 		//onGround = false;
 
-		
+
 
 		currentFrame += 0.005*time;
 		if (currentFrame > 3) {
@@ -85,11 +85,11 @@ public:
 			sprite.setTextureRect(sf::IntRect(32 * int(currentFrame) + 32, 0, -32, 53));
 		}
 
-		
+
 
 		sprite.setPosition(position.x, WINDOW_HEIGHT - position.y);
-		
-		
+
+
 		dx = 0;
 	}
 
