@@ -33,14 +33,8 @@
   <properties>
    <property name="dfsd" value="345"/>
   </properties>
-  <object id="1" name="test" x="188.551" y="98.7255" width="74" height="78">
-   <properties>
-    <property name="a property" value="12"/>
-   </properties>
-  </object>
-  <object id="32" name="test" x="306.02" y="92.552" width="95.538" height="91.0596"/>
-  <object id="34" name="test" x="438.878" y="91.0597" width="83.5957" height="120.915"/>
-  <object id="36" name="test" x="177.641" y="206.004" width="122.408" height="73.1463"/>
+  <object id="32" name="test" x="83.5957" y="279.15" width="95.538" height="91.0596"/>
+  <object id="34" name="test" x="685.187" y="210.482" width="83.5957" height="120.915"/>
   <object id="39" name="test2" x="4.47834" y="544.865">
    <polygon points="0,0 1267.37,-11.9422 1265.88,-2.98556 0,11.9422"/>
   </object>

@@ -30,7 +30,7 @@ int main() {
 	srand(time(0));
 
 
-	b2Vec2 gravity(0.0f, -9.81f);
+	b2Vec2 gravity(0.0f, -0.81f);
 	b2World world(gravity);
 
 	Player hero(&world);
@@ -124,7 +124,7 @@ int main() {
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::A)))) {
 			hero.dx = -0.1;
 
-			hero.bodyM->SetLinearVelocity(b2Vec2(-15.0f, 0));
+			hero.bodyM->SetLinearVelocity(b2Vec2(-5.0f, 0));
 			if (positions.x - dd < WINDOW_WIDTH / 2 && dd >= 0) {
 				camX = -0.1 * time;
 			}
@@ -138,7 +138,7 @@ int main() {
 			hero.dx = 0.1;
 			//hero.bodyM->SetLinearVelocity(b2Vec2(5.0f, 0));
 			//hero.bodyM->ApplyForceToCenter(b2Vec2(50.0f, 0), false);
-			hero.bodyM->SetLinearVelocity(b2Vec2(15.0f, 0));
+			hero.bodyM->SetLinearVelocity(b2Vec2(5.0f, 0));
 			sf::Vector2f position = hero.sprite.getPosition();
 
 			if (positions.x - dd > WINDOW_WIDTH / 2) {
