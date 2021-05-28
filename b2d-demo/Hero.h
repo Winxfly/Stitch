@@ -14,6 +14,7 @@ public:
 
 	bool onGround;
 	float currentFrame;
+	bool isRight;
 
 	sf::FloatRect rect;
 	sf::Sprite sprite;
@@ -54,8 +55,9 @@ public:
 		dx = 0;
 		dy = 0;
 		currentFrame = 0;
+		isRight = true;
 
-		sprite.setTextureRect(sf::IntRect(66 * int(currentFrame) + 66, 0, -66, 97));
+		sprite.setTextureRect(sf::IntRect(66 * int(currentFrame), 0, 66, 97));
 	}
 
 	void update(float time, b2Vec2 position) {
@@ -79,10 +81,22 @@ public:
 
 		if (dx > 0) {
 			sprite.setTextureRect(sf::IntRect(66 * int(currentFrame), 0, 66, 97));
+			isRight = true;
 		}
-
-		if (dx < 0) {
+		else if (dx < 0) {
 			sprite.setTextureRect(sf::IntRect(66 * int(currentFrame) + 66, 0, -66, 97));
+			isRight = false;
+		}
+		else {
+			if (isRight) {
+				currentFrame = 0;
+				sprite.setTextureRect(sf::IntRect(66 * int(currentFrame), 0, 66, 97));
+			}
+			else {
+				currentFrame = 0;
+				sprite.setTextureRect(sf::IntRect(66 * int(currentFrame) + 66, 0, -66, 97));
+			}
+
 		}
 
 		//position = body->GetPosition();
