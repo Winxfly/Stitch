@@ -36,7 +36,7 @@ public:
 		body->SetFixedRotation(true);
 
 		b2PolygonShape dynamicBox;
-		dynamicBox.SetAsBox(32.0f / 2, 53.0f / 2);
+		dynamicBox.SetAsBox(66.0f / 2, 97.0f / 2);
 
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &dynamicBox;
@@ -45,17 +45,17 @@ public:
 		body->CreateFixture(&fixtureDef);
 
 		//SFML
-		heroTexture.loadFromFile("mario.png");
+		heroTexture.loadFromFile("image/hero.png");
 		sprite.setTexture(heroTexture);
-		sprite.setOrigin(32.0f / 2, 53.0f / 2);
+		sprite.setOrigin(66.0f / 2, 97.0f / 2);
 
-		rect = sf::FloatRect(200, 200, 32, 53);
+		rect = sf::FloatRect(200, 200, 66, 97);
 
 		dx = 0;
 		dy = 0;
 		currentFrame = 0;
 
-		sprite.setTextureRect(sf::IntRect(32 * int(currentFrame) + 32, 0, -32, 53));
+		sprite.setTextureRect(sf::IntRect(66 * int(currentFrame) + 66, 0, -66, 97));
 	}
 
 	void update(float time, b2Vec2 position) {
@@ -72,17 +72,17 @@ public:
 
 		//Collision(1);
 
-		currentFrame += 0.005*time;
-		if (currentFrame > 3) {
-			currentFrame -= 3;
-		}
-
-		if (dx < 0) {
-			sprite.setTextureRect(sf::IntRect(32 * int(currentFrame), 0, 32, 53));
+		currentFrame += 0.009 * time;
+		if (currentFrame > 7) {
+			currentFrame -= 6;
 		}
 
 		if (dx > 0) {
-			sprite.setTextureRect(sf::IntRect(32 * int(currentFrame) + 32, 0, -32, 53));
+			sprite.setTextureRect(sf::IntRect(66 * int(currentFrame), 0, 66, 97));
+		}
+
+		if (dx < 0) {
+			sprite.setTextureRect(sf::IntRect(66 * int(currentFrame) + 66, 0, -66, 97));
 		}
 
 		//position = body->GetPosition();

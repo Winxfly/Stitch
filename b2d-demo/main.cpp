@@ -70,9 +70,9 @@ int main() {
 	rectangle2.setPosition(sf::Vector2f(xGround + 500, 768.0f - 50.0f));
 	rectangle2.setRotation(angleGround  * (-1));
 
-	sf::RectangleShape rectangle3(sf::Vector2f(32.0f, 53.0f));
+	sf::RectangleShape rectangle3(sf::Vector2f(66.0f, 97.0f));
 	rectangle3.setFillColor(sf::Color(100, 0, 240));
-	rectangle3.setOrigin(32.0f / 2, 53.0f / 2);
+	rectangle3.setOrigin(66.0f / 2, 97.0f / 2);
 
 	tmx::setLogLevel(tmx::Logger::Info | tmx::Logger::Error);
 
