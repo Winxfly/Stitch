@@ -28,9 +28,6 @@ public:
 
 	Player(b2World* world) {
 		//BOX2D
-		//gravity.Set(0.0f, -9.81f);
-		//world.SetGravity(gravity);
-
 		bodyDef.type = b2_dynamicBody;
 		bodyDef.position.Set(700.0f, 600.0f);
 		body = world->CreateBody(&bodyDef);
