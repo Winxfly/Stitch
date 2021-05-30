@@ -128,7 +128,7 @@ int main() {
 			//sf::Vector2f position = hero.sprite.getPosition();
 
 		if (positions.x - ddx < WINDOW_WIDTH / 2 && ddx >= 0 && dddds.x <= 0) {
-			camX = (positions.x - (WINDOW_HEIGHT / 2) - ddx) * dt * 4;
+			camX = (positions.x - (WINDOW_WIDTH / 2) - ddx) * dt * 4;
 			//camX = dddds.x * 27 * dt;
 			ddx += camX;
 			if (ddx > 0) {
@@ -142,7 +142,7 @@ int main() {
 			camX = 0;
 		}else
 		if (positions.x - ddx > WINDOW_WIDTH / 2) {
-			camX = (positions.x - (WINDOW_HEIGHT / 2) - ddx) * dt * 4;
+			camX = (positions.x - (WINDOW_WIDTH / 2) - ddx) * dt * 4;
 				//camX = dddds.x * 27 * dt;
 				ddx += camX;
 				if (ddx > 0) {
@@ -169,7 +169,7 @@ int main() {
 				//hero.bodyM->ApplyLinearImpulseToCenter(b2Vec2(0, 1500), true);
 				//view.move(0, camY);
 			if (hero.onGround) {
-				hero.bodyM->ApplyLinearImpulseToCenter(b2Vec2(0, 90000), true);
+				hero.bodyM->ApplyLinearImpulseToCenter(b2Vec2(0, 45000), true);
 
 			}
 
