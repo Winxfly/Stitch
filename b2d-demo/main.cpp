@@ -11,7 +11,6 @@
 #include "tmx/Log.hpp"
 #include "tmx/tmx2box2d.hpp"
 
-
 #include "Constants.h"
 #include "Hero.h"
 #include "MapLoader.h"
@@ -93,9 +92,9 @@ int main() {
 			hero.dx = -0.1;
 			
 			if (hero.onGround) {
-				if (dddds.x > -10) {
-					hero.bodyM->ApplyLinearImpulseToCenter(b2Vec2(-50000, 0), true);
-				}
+				
+					hero.bodyM->ApplyLinearImpulseToCenter(b2Vec2(-100, 0), true);
+				
 				//hero.bodyM->SetLinearVelocity(b2Vec2(-5.0f, 0));
 			}
 			else {
@@ -230,11 +229,11 @@ int main() {
 
 		
 
-		b2Vec2 sdfsdf = hero.bodyM->GetLinearVelocity();
+		//b2Vec2 sdfsdf = hero.bodyM->GetLinearVelocity();
 
 		//std::cout << sdfsdf.x << "||" << sdfsdf.y << "\n";
 
-		map.updateMap(dt, map.bodyM2);
+		map.updateMap(dt);
 
 		hero.update(dt, positions, hero.bodyM, hero.dx, hero.dy);
 

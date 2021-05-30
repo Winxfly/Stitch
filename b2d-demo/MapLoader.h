@@ -251,18 +251,7 @@ public:
 		
 	}
 
-	void updateMap(float time, b2Body* bodyM2[3]) {
-
-
-
-
-
-		currentFrame += 0.005 * time;
-		if (currentFrame > 3) {
-			currentFrame -= 3;
-		}
-
-
+	void updateMap(float time) {
 
 
 		for (int i = 0; i < objCount; i++) {
@@ -276,8 +265,5 @@ public:
 
 
 	}
-
-
-
 
 };
