@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="40">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="70">
  <tileset firstgid="1" source="desert.tsx"/>
  <tileset firstgid="49" name="Sewer" tilewidth="24" tileheight="24" tilecount="72" columns="8">
   <image source="sewer_tileset.png" trans="ff00ff" width="192" height="217"/>
@@ -14,12 +14,12 @@
    </properties>
   </tile>
  </tileset>
- <layer id="1" name="Ground" width="40" height="40">
+ <layer id="1" name="Ground" width="200" height="40">
   <properties>
    <property name="dummy property" value="44"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztmNkKwjAQRVP74AbWBVxRq3Xf6v9/nSM2VIbQJjEZR+nDwQZScrwztoOBEGLhkQ4QAV3P59hwU/gtGXj9Sn7PrIbACBgz8FERADUgRN4+zpoAUwNmQBNoAW2CLFbA2oDEo9+hwG8DnIDtF/2K8ks086Tw2zH0uyMv7HcRr/6/EvvhnsPrsrxwX7rwU/0ODig/eV3mh3N1ld8eraWPaX6+64s9McesfrqcHfjVMxoifxcVEWruk8w/9ItEPl/I71pEW3Of6j4bv5HI54se0C9hoLlPdZ/P3qMmFuo5h5NnTOhjM5tReN2yT51n5/v7J3F0vi46fk+ne7aX0i9l6If7mpufTX3f5wsqv9TAD2fJLT9VrTn7UeZnM5tR+v0LMQOHXwFnxe2/warGFRWf8QAOGrey
+   eJzt3GlLAzEUheFb+8GlYF3AuqBW677U/v9fZ4bp0DHGTjKQ3GR8Hzhoy7Qi5HgzNDgSkZuIOTSZmhz1fD2gKWY3lvK7H7eB7wFoitkP5gdKF7Mb1aw4M5mZnPd8D0BT7PkxMtkxGbeeC9ljAZpC1vqFyWVArkz2TQ5MJoE/i34gByFr9c7kPiALoR8o21/r8sXxXNOPB5M3k0ehHxi2PvNjYT2mHxiqrvX5JPQD/5drTa7kZy/sfnxIff/9KfQDw7btnsN+3DUv7PsS+oHSue7Dq+fa86P5vqsf9lyhHyhdtQafxX3PETo/2F9haNpr0e6JnVep90++eRf6gbLtrrMnm7Mg2zL2vK7JtdAPlGsqm/O1zd/6bZl4Xud6Hf1AaWayOV97bHLSkVPP61yvox8oje+9R+rMpT7nC2iy12VOPZnH+7UBL6n60OdsPPsraIvdi+X6q89nJ+3P35szXoCmVHsln35UnVitr6UfyEGKbnwJ/UCZYnXCvq+hHyhRTvur9vlG+oEcpNhb+fbDniX0A9pymh+uvRagKed+MD+gLVU/+pyNpx/QlqoffQNo0l7/dubWY0CTdh+YH8hZTrPC9X+rAU3a86GrN4Am7S6wv0LOtNc//UDOtNc//UDOtNc//UDOtNc//UDOvgHYALey
   </data>
  </layer>
  <imagelayer id="2" name="Image Layer 1" visible="0">
@@ -33,18 +33,29 @@
   <properties>
    <property name="dfsd" value="345"/>
   </properties>
-  <object id="32" name="test" x="83.5957" y="279.15" width="95.538" height="91.0596"/>
-  <object id="34" name="test" x="685.187" y="210.482" width="83.5957" height="120.915"/>
-  <object id="39" name="test2" x="4.47834" y="544.865">
-   <polygon points="0,0 1267.37,-11.9422 1265.88,-2.98556 0,11.9422"/>
+  <object id="32" name="test" x="332" y="161.333" width="95.538" height="91.0596"/>
+  <object id="34" name="test" x="460.52" y="137.149" width="83.5957" height="120.915"/>
+  <object id="40" x="114.5" y="395" visible="0">
+   <polygon points="0,0 69,13.5 48.5,74 19,43.5 -25,66.5 -29.5,22"/>
   </object>
+  <object id="55" name="test2" x="57.3333" y="610.667" width="864" height="217.333"/>
+  <object id="59" name="test2" x="9.33333" y="1217.33" width="6300" height="56"/>
+  <object id="60" name="test2" x="932" y="1048" width="94.6667" height="80"/>
+  <object id="61" name="test2" x="1042.66" y="985.337" width="97.3333" height="122.667"/>
+  <object id="62" name="test2" x="1157.33" y="881.334" width="112" height="89.3334"/>
+  <object id="63" name="test2" x="976.003" y="724" width="108" height="94.6667"/>
+  <object id="64" name="test2" x="927.997" y="616" width="34.6667" height="106.667"/>
+  <object id="66" name="test" x="781.333" y="317.333" width="101.333" height="113.333"/>
+  <object id="67" name="test2" x="1292" y="738.667" width="164" height="130.667"/>
+  <object id="68" name="test2" x="1474.67" y="606.667" width="910.667" height="156"/>
+  <object id="69" name="test2" x="1314.67" y="92" width="33.3333" height="422.667"/>
  </objectgroup>
- <layer id="4" name="Layer 2" width="40" height="40" opacity="0.82">
+ <layer id="4" name="Layer 2" width="200" height="40" opacity="0.82">
   <properties>
    <property name="asdfrteew" value="12345678"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1clOAkEURuF6IgwOOIHgAKigKINMgoAio4Ii6uN7khbDAkkH6O5Lck/yretPLaqMkd/GL6mtYl9pFUMcSvI2TVvHfHNIS+Km6XTfcum+5ZKy779/Wvo+Kbmxr2DTrG0S769k3N+WmcOp/NjEFraxgwB2sSdg3z4OcIggQjhCGBEB+45xglOcIYoY4jgXsO8Cl0ggiStcI4UbB8+12y3SxrqDLHK4Q97Mfi/crmisN6CMe1RQxQNq3s36q44GHvGEJp7RQtvDXZM66KKHPl7wigGGHu6a9IZ3jPCBMT7xhW8Pd2mapmnaIv0Ao8orDQ==
+   eJzt2sVqxVAYReHzRC11d3e31N1dH78LbqGQNqGDCydN1gdrlsE/2QRCQpCUp/ErST/VYx9JPQ6RSshtSJIkSZL0PzXkJOmbm5CyuQ8pm/uQsrkPKZv7kLK5Dyn7Py33Ifkfo5THfajsNv9YWhLch5SWBLehalnJSSqjJmqmFmqlNmqnDupMPes+VDVd1E091Et91E8DNJh61n2oaoZomEZolMZonCZoMvWs+1DVTNE0zdAszdE8LdBixLukIlii5VB7B6zSGq3TRvj9e61UJVuh9g12m3Zol/Zonw7inSUVwiEd0TGd0Cmd0TldRLxLKoJLuqJruqFbuqN7eoh4l1QEj/REz/RCr/RG7/QR8S5JkiRJkiRJkiRJkiTF9Qm10CsN
   </data>
  </layer>
 </map>

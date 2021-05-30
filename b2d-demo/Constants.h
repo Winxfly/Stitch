@@ -6,7 +6,7 @@ const int WINDOW_HEIGHT = 768;
 
 //TILE VALUES
 const int TILE_SIZE = 32;
-const int TILES_TOTAL_WIDTH = 40;
+const int TILES_TOTAL_WIDTH = 200;
 const int TILES_TOTAL_HEIGHT = 40;
 
 //MAP VALUES

@@ -22,18 +22,24 @@ public:
 
 	b2BodyDef bodyDefM;
 	b2Body* bodyM;*/
-	sf::FloatRect recto[3];
+	
+	int objCount;
+
+	sf::FloatRect recto[32];
 	sf::Sprite sprites;
 	sf::Texture heroTextures;
 	float currentFrame = 0;
 	b2BodyDef bodyDefM2;
-	b2Body* bodyM2[3];
-	sf::RectangleShape rectangle4[3];
+	b2Body* bodyM2[32];
+	sf::RectangleShape rectangle4[32];
+	sf::ConvexShape convex[32];
 	//std::vector<sf::RectangleShape> rectangles;
 
+	
 
 	tmx::MapObject* mapObj;
 
+	
 
 	Map(b2World* world, tmx::MapLoader* mapLoader) {
 		//BOX2D
@@ -43,9 +49,12 @@ public:
 		const std::vector<tmx::MapLayer>& layers = mapLoader->getLayers();
 		int score = 0;
 
+		objCount = layers[2].objects.size() - 1;
+
 		for (const auto& l : layers)
 		{
-
+			
+			
 			//if (l.name == "test") {
 			for (const auto& o : l.objects)
 			{
@@ -57,6 +66,7 @@ public:
 
 
 					mapObj = new tmx::MapObject(o);
+					std::vector<sf::Vector2f> pointss = mapObj->polyPoints();
 
 					recto[score] = sf::FloatRect(mapObj->getAABB());
 
@@ -64,13 +74,35 @@ public:
 					//std::cout << recto.width << " | " << recto.height << "\n";
 
 					bodyDefM2.type = b2_dynamicBody;
-					bodyDefM2.position.Set(recto[score].left + (recto[score].width / 2), WINDOW_HEIGHT - recto[score].top - (recto[score].height / 2));
+					sf::Vector2f fff = mapObj->firstPoint();
+					bodyDefM2.position.Set(recto[score].left, WINDOW_HEIGHT - recto[score].top - recto[score].height);
 
 					b2PolygonShape dynamicMario2;
-					dynamicMario2.SetAsBox(recto[score].width / 2, recto[score].height / 2);
+					//dynamicMario2.SetAsBox(recto[score].width / 2, recto[score].height / 2);
 
 					bodyM2[score] = world->CreateBody(&bodyDefM2);
 					bodyM2[score]->SetFixedRotation(true);
+
+					convex[score].setPointCount(pointss.size());
+					convex[score].setFillColor(sf::Color(200, 50, 90));
+					convex[score].setPosition(sf::Vector2f(mapObj->firstPoint()));
+					int d = pointss.size();
+					
+
+					b2Vec2 vertices[8];
+					for (int i = 0; i < pointss.size(); i++) {
+
+						vertices[i].Set(pointss[i].x + (fff.x - recto[score].left), recto[score].height - pointss[i].y);
+
+
+
+						convex[score].setPoint(i, sf::Vector2f(pointss[i].x + (fff.x - recto[score].left), pointss[i].y));
+
+					}
+
+
+
+					dynamicMario2.Set(vertices, pointss.size());
 
 					b2FixtureDef fixtureDefM2;
 
@@ -88,10 +120,11 @@ public:
 
 
 
-					rectangle4[score].setSize(sf::Vector2f(recto[score].width, recto[score].height));
+
+					/*rectangle4[score].setSize(sf::Vector2f(recto[score].width, recto[score].height));
 					rectangle4[score].setFillColor(sf::Color(100, 0, 240));
 					rectangle4[score].setOrigin(recto[score].width / 2, recto[score].height / 2);
-					rectangle4[score].setPosition(sf::Vector2f(positionLocal.x, WINDOW_HEIGHT - positionLocal.y - (recto[score].height / 2)));
+					rectangle4[score].setPosition(sf::Vector2f(positionLocal.x, WINDOW_HEIGHT - positionLocal.y - (recto[score].height / 2)));*/
 
 
 
@@ -148,16 +181,37 @@ public:
 
 
 					mapObj = new tmx::MapObject(o);
+					std::vector<sf::Vector2f> pointss = mapObj->polyPoints();
 					recto[score] = sf::FloatRect(mapObj->getAABB());
 
-					std::cout << recto[score].left << " 1| " << recto[score].top << "\n";
-					//std::cout << recto.width << " | " << recto.height << "\n";
+					//std::cout << recto[score].left << " 1| " << recto[score].top << "\n";
+					//std::cout << recto[score].width << " 2| " << recto[score].height << "\n";
 
 					bodyDefM2.type = b2_staticBody;
-					bodyDefM2.position.Set(recto[score].left + (recto[score].width / 2), WINDOW_HEIGHT - recto[score].top - (recto[score].height / 2));
+					sf::Vector2f fff = mapObj->firstPoint();
+					bodyDefM2.position.Set(recto[score].left, WINDOW_HEIGHT - recto[score].top - recto[score].height);
 
 					b2PolygonShape dynamicMario2;
 					dynamicMario2.SetAsBox(recto[score].width / 2, recto[score].height / 2);
+
+					convex[score].setPointCount(pointss.size());
+					convex[score].setFillColor(sf::Color(200, 50, 90));
+					convex[score].setPosition(sf::Vector2f(recto[score].left, recto[score].top));
+
+					b2Vec2 vertices[4];
+					for (int i = 0; i < pointss.size(); i++) {
+
+						vertices[i].Set(pointss[i].x + (fff.x - recto[score].left), recto[score].height - pointss[i].y);
+						//std::cout << pointss[i].x << " | " << pointss[i].y << "\n";
+
+
+						convex[score].setPoint(i, sf::Vector2f(pointss[i].x + (fff.x - recto[score].left), pointss[i].y));
+
+					}
+
+
+
+					dynamicMario2.Set(vertices, 4);
 
 					bodyM2[score] = world->CreateBody(&bodyDefM2);
 					bodyM2[score]->SetFixedRotation(true);
@@ -171,16 +225,16 @@ public:
 
 					b2Vec2 positionLocal = bodyM2[score]->GetPosition();
 
-					std::cout << positionLocal.x << " 2| " << positionLocal.y << "\n";
+					//std::cout << positionLocal.x << " 2| " << positionLocal.y << "\n";
 
 					//rectangles.emplace_back(sf::Vector2f(recto.width, recto.height));
 
 
 
 
-					rectangle4[score].setSize(sf::Vector2f(recto[score].width, recto[score].height));
+					//rectangle4[score].setSize(sf::Vector2f(recto[score].width, recto[score].height));
 					//rectangle4[score].setFillColor(sf::Color(100, 0, 240));
-					rectangle4[score].setPosition(sf::Vector2f(positionLocal.x, WINDOW_HEIGHT - positionLocal.y - (recto[score].height / 2)));
+					rectangle4[score].setPosition(sf::Vector2f(positionLocal.x, WINDOW_HEIGHT - positionLocal.y - (recto[score].height / 3)));
 					rectangle4[score].setOrigin(recto[score].width / 2, recto[score].height / 2);
 
 
@@ -194,9 +248,10 @@ public:
 			}
 			//}
 		}
+		
 	}
 
-	void updateMap(float time, b2Body* bodyM2[2]) {
+	void updateMap(float time, b2Body* bodyM2[3]) {
 
 
 
@@ -210,13 +265,14 @@ public:
 
 
 
-
-		for (int i = 0; i <= 2; i++) {
+		for (int i = 0; i < objCount; i++) {
 			b2Vec2 positionBlock = bodyM2[i]->GetPosition();
 			//sprites.setPosition(positionBlock.x, WINDOW_HEIGHT - positionBlock.y);
-			rectangle4[i].setPosition(sf::Vector2f(positionBlock.x, WINDOW_HEIGHT - positionBlock.y));
+			//rectangle4[i].setPosition(sf::Vector2f(positionBlock.x, WINDOW_HEIGHT - positionBlock.y));
+			convex[i].setPosition(sf::Vector2f(positionBlock.x, WINDOW_HEIGHT - positionBlock.y - recto[i].height));
+			//std::cout << positionBlock.x << " | " << WINDOW_HEIGHT - positionBlock.y << "\n";
 		}
-		//std::cout << positionBlock.x << " | " << WINDOW_HEIGHT - positionBlock.y << "\n";
+
 
 
 	}
