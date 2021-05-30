@@ -8,6 +8,8 @@
 #include "tmx/tmx2box2d.hpp"
 
 #include "Constants.h"
+#include "Enums.h"
+#include "GameState.h"
 
 sf::RenderWindow *window;
 tmx::MapLoader *mapLoader;
