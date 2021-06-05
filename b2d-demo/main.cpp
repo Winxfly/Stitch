@@ -58,25 +58,40 @@ int main() {
 	color.setFillColor(sf::Color(0, 0, 0, 128));
 	color.setSize(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
 
+	sf::Texture blueTexture;
+	sf::Texture purpleTexture;
+	sf::Texture orangeTexture;
+	sf::Texture pinkTexture;
+
+	blueTexture.loadFromFile("image/blue.png");
+	purpleTexture.loadFromFile("image/purple.png");
+	orangeTexture.loadFromFile("image/orange.png");
+	pinkTexture.loadFromFile("image/pink.png");
+
+
 	sf::RectangleShape colorOne;
-	colorOne.setPosition(sf::Vector2f(WINDOW_WIDTH / 2 - 50, WINDOW_HEIGHT / 2 - 75));
-	colorOne.setFillColor(sf::Color(0, 0, 205, 128));
-	colorOne.setSize(sf::Vector2f(100, 150));
+	colorOne.setPosition(sf::Vector2f(WINDOW_WIDTH / 2 - COLOR_SETTINGS_SIZE, WINDOW_HEIGHT / 2 - COLOR_SETTINGS_SIZE));
+	//colorOne.setFillColor(sf::Color(0, 0, 205, 128));
+	colorOne.setSize(sf::Vector2f(COLOR_SETTINGS_SIZE, COLOR_SETTINGS_SIZE));
+	colorOne.setTexture(&blueTexture);
 
 	sf::RectangleShape colorTwo;
-	colorTwo.setPosition(sf::Vector2f(WINDOW_WIDTH / 2 + 50, WINDOW_HEIGHT / 2 - 75));
-	colorTwo.setFillColor(sf::Color(178, 34, 34, 128));
-	colorTwo.setSize(sf::Vector2f(100, 150));
+	colorTwo.setPosition(sf::Vector2f(WINDOW_WIDTH / 2 + COLOR_SETTINGS_SIZE, WINDOW_HEIGHT / 2 - COLOR_SETTINGS_SIZE));
+	//colorTwo.setFillColor(sf::Color(178, 34, 34, 128));
+	colorTwo.setSize(sf::Vector2f(COLOR_SETTINGS_SIZE, COLOR_SETTINGS_SIZE));
+	colorTwo.setTexture(&purpleTexture);
 
 	sf::RectangleShape colorThree;
-	colorThree.setPosition(sf::Vector2f(WINDOW_WIDTH / 2 - 50, WINDOW_HEIGHT / 2 + 75));
-	colorThree.setFillColor(sf::Color(50, 205, 50, 128));
-	colorThree.setSize(sf::Vector2f(100, 150));
+	colorThree.setPosition(sf::Vector2f(WINDOW_WIDTH / 2 - COLOR_SETTINGS_SIZE, WINDOW_HEIGHT / 2 + COLOR_SETTINGS_SIZE));
+	//colorThree.setFillColor(sf::Color(50, 205, 50, 128));
+	colorThree.setSize(sf::Vector2f(COLOR_SETTINGS_SIZE, COLOR_SETTINGS_SIZE));
+	colorThree.setTexture(&pinkTexture);
 
 	sf::RectangleShape colorFour;
-	colorFour.setPosition(sf::Vector2f(WINDOW_WIDTH / 2 + 50, WINDOW_HEIGHT / 2 + 75));
-	colorFour.setFillColor(sf::Color(255, 255, 0, 128));
-	colorFour.setSize(sf::Vector2f(100, 150));
+	colorFour.setPosition(sf::Vector2f(WINDOW_WIDTH / 2 + COLOR_SETTINGS_SIZE, WINDOW_HEIGHT / 2 + COLOR_SETTINGS_SIZE));
+	//colorFour.setFillColor(sf::Color(255, 255, 0, 128));
+	colorFour.setSize(sf::Vector2f(COLOR_SETTINGS_SIZE, COLOR_SETTINGS_SIZE));
+	colorFour.setTexture(&orangeTexture);
 
 
 
@@ -329,9 +344,9 @@ int main() {
 
 
 			// следует за персом
-			colorOne.setPosition(sf::Vector2f(positions.x - 100 - O, WINDOW_HEIGHT - positions.y - 150 - O));
-			colorTwo.setPosition(sf::Vector2f(positions.x + OO, WINDOW_HEIGHT - positions.y - 150 - OO));
-			colorThree.setPosition(sf::Vector2f(positions.x - 100 - OOO, WINDOW_HEIGHT - positions.y + OOO));
+			colorOne.setPosition(sf::Vector2f(positions.x - COLOR_SETTINGS_SIZE - O, WINDOW_HEIGHT - positions.y - COLOR_SETTINGS_SIZE - O));
+			colorTwo.setPosition(sf::Vector2f(positions.x + OO, WINDOW_HEIGHT - positions.y - COLOR_SETTINGS_SIZE - OO));
+			colorThree.setPosition(sf::Vector2f(positions.x - COLOR_SETTINGS_SIZE - OOO, WINDOW_HEIGHT - positions.y + OOO));
 			colorFour.setPosition(sf::Vector2f(positions.x + OOOO, WINDOW_HEIGHT - positions.y + OOOO));
 		}
 		map.updateMap(dt, isColorChange);

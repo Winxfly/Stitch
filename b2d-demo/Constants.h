@@ -8,6 +8,7 @@ const int WINDOW_HEIGHT = 768;
 const int TILE_SIZE = 32;
 const int TILES_TOTAL_WIDTH = 200;
 const int TILES_TOTAL_HEIGHT = 40;
+const int COLOR_SETTINGS_SIZE = 130;
 
 //MAP VALUES
 const int MAP_SIZE_WIDTH = TILE_SIZE * TILES_TOTAL_WIDTH;
