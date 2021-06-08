@@ -31,6 +31,11 @@ public:
 	sf::Texture orangeTexture;
 	sf::Texture pinkTexture;
 
+	sf::Texture rectBlueTexture;
+	sf::Texture rectPurpleTexture;
+	sf::Texture rectOrangeTexture;
+	sf::Texture rectPinkTexture;
+
 	sf::RectangleShape colorOne;
 	sf::RectangleShape colorTwo;
 	sf::RectangleShape colorThree;
@@ -59,6 +64,11 @@ public:
 		purpleTexture.loadFromFile("image/purple.png");
 		orangeTexture.loadFromFile("image/orange.png");
 		pinkTexture.loadFromFile("image/pink.png");
+
+		rectBlueTexture.loadFromFile("image/blueRect.png");
+		rectPurpleTexture.loadFromFile("image/purpleRect.png");
+		rectOrangeTexture.loadFromFile("image/orangeRect.png");
+		rectPinkTexture.loadFromFile("image/pinkRect.png");
 
 		colorOne.setPosition(sf::Vector2f(WINDOW_WIDTH / 2 - COLOR_SETTINGS_SIZE, WINDOW_HEIGHT / 2 - COLOR_SETTINGS_SIZE));
 		colorOne.setSize(sf::Vector2f(COLOR_SETTINGS_SIZE, COLOR_SETTINGS_SIZE));
@@ -102,7 +112,7 @@ public:
 					body[score]->SetFixedRotation(true);
 
 					convex[score].setPointCount(pointss.size());
-					convex[score].setFillColor(sf::Color(200, 50, 90));
+					//convex[score].setFillColor(sf::Color(200, 50, 90));
 					convex[score].setPosition(sf::Vector2f(mapObj->firstPoint()));
 					int d = pointss.size();		
 
@@ -113,16 +123,20 @@ public:
 					}
 
 					if (objectColor[score] == "blue") {
-						convex[score].setFillColor(sf::Color(27, 193, 246));
+						//convex[score].setFillColor(sf::Color(27, 193, 246));
+						convex[score].setTexture(&rectBlueTexture);
 					}
 					else if (objectColor[score] == "purple") {
-						convex[score].setFillColor(sf::Color(177, 13, 253));
+						//convex[score].setFillColor(sf::Color(177, 13, 253));
+						convex[score].setTexture(&rectPurpleTexture);
 					}
 					else if(objectColor[score] == "pink") {
-						convex[score].setFillColor(sf::Color(244, 70, 170));
+						//convex[score].setFillColor(sf::Color(244, 70, 170));
+						convex[score].setTexture(&rectPinkTexture);
 					}
 					else if(objectColor[score] == "orange") {
-						convex[score].setFillColor(sf::Color(249, 139, 9));
+						//convex[score].setFillColor(sf::Color(249, 139, 9));
+						convex[score].setTexture(&rectOrangeTexture);
 					}
 					
 					dynamicMario2.Set(vertices, pointss.size());
@@ -149,7 +163,7 @@ public:
 					dynamicMario2.SetAsBox(rect[score].width / 2, rect[score].height / 2);
 
 					convex[score].setPointCount(pointss.size());
-					convex[score].setFillColor(sf::Color(200, 50, 90));
+					convex[score].setFillColor(sf::Color(0, 0, 0, 0));
 					convex[score].setPosition(sf::Vector2f(rect[score].left, rect[score].top));
 
 					b2Vec2 vertices[8];

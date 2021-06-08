@@ -1,64 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="76">
- <tileset firstgid="1" source="desert.tsx"/>
- <tileset firstgid="49" name="Sewer" tilewidth="24" tileheight="24" tilecount="72" columns="8">
-  <image source="sewer_tileset.png" trans="ff00ff" width="192" height="217"/>
-  <tile id="33">
-   <properties>
-    <property name="tileprop" value="sd"/>
-   </properties>
-  </tile>
-  <tile id="44">
-   <properties>
-    <property name="tileproperty" value="tobeparsed"/>
-   </properties>
-  </tile>
- </tileset>
- <layer id="1" name="Ground" width="200" height="40">
-  <properties>
-   <property name="dummy property" value="44"/>
-  </properties>
-  <data encoding="base64" compression="zlib">
-   eJzt3GlLAzEUheFb+8GlYF3AuqBW677U/v9fZ4bp0DHGTjKQ3GR8Hzhoy7Qi5HgzNDgSkZuIOTSZmhz1fD2gKWY3lvK7H7eB7wFoitkP5gdKF7Mb1aw4M5mZnPd8D0BT7PkxMtkxGbeeC9ljAZpC1vqFyWVArkz2TQ5MJoE/i34gByFr9c7kPiALoR8o21/r8sXxXNOPB5M3k0ehHxi2PvNjYT2mHxiqrvX5JPQD/5drTa7kZy/sfnxIff/9KfQDw7btnsN+3DUv7PsS+oHSue7Dq+fa86P5vqsf9lyhHyhdtQafxX3PETo/2F9haNpr0e6JnVep90++eRf6gbLtrrMnm7Mg2zL2vK7JtdAPlGsqm/O1zd/6bZl4Xud6Hf1AaWayOV97bHLSkVPP61yvox8oje+9R+rMpT7nC2iy12VOPZnH+7UBL6n60OdsPPsraIvdi+X6q89nJ+3P35szXoCmVHsln35UnVitr6UfyEGKbnwJ/UCZYnXCvq+hHyhRTvur9vlG+oEcpNhb+fbDniX0A9pymh+uvRagKed+MD+gLVU/+pyNpx/QlqoffQNo0l7/dubWY0CTdh+YH8hZTrPC9X+rAU3a86GrN4Am7S6wv0LOtNc//UDOtNc//UDOtNc//UDOtNc//UDOvgHYALey
-  </data>
- </layer>
- <imagelayer id="2" name="Image Layer 1" visible="0">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="76">
+ <tileset firstgid="1" source="ground.tsx"/>
+ <imagelayer id="2" name="Image Layer 1">
   <image source="sewer_tileset.png" trans="ff00ff" width="192" height="217"/>
   <properties>
    <property name="speef" value="cake"/>
    <property name="your" value="mum"/>
   </properties>
  </imagelayer>
- <objectgroup color="#00a49f" id="3" name="Objects">
+ <layer id="1" name="Ground" width="200" height="40" offsetx="2.13524" offsety="1.06762">
+  <properties>
+   <property name="dummy property" value="44"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   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
+  </data>
+ </layer>
+ <objectgroup color="#00a49f" id="3" name="Objects" visible="0">
   <properties>
    <property name="dfsd" value="345"/>
   </properties>
-  <object id="32" name="dynamicRect" type="blue" x="332" y="161.333" width="95.538" height="91.0596"/>
-  <object id="34" name="dynamicRect" type="pink" x="460.52" y="137.149" width="83.5957" height="120.915"/>
+  <object id="32" name="dynamicRect" type="blue" x="222" y="159.333" width="155.538" height="158.06"/>
+  <object id="34" name="dynamicRect" type="pink" x="407.52" y="223.149" width="156.596" height="155.915"/>
   <object id="40" x="114.5" y="395" visible="0">
    <polygon points="0,0 69,13.5 48.5,74 19,43.5 -25,66.5 -29.5,22"/>
   </object>
-  <object id="55" name="staticRect" x="57.3333" y="610.667" width="864" height="217.333"/>
-  <object id="59" name="staticRect" x="9.33333" y="1217.33" width="6300" height="56"/>
-  <object id="60" name="staticRect" x="932" y="1048" width="94.6667" height="80"/>
-  <object id="61" name="staticRect" x="1042.66" y="985.337" width="97.3333" height="122.667"/>
-  <object id="62" name="staticRect" x="1157.33" y="881.334" width="112" height="89.3334"/>
-  <object id="63" name="staticRect" x="976.003" y="724" width="108" height="94.6667"/>
-  <object id="64" name="staticRect" x="927.997" y="616" width="34.6667" height="106.667"/>
-  <object id="66" name="dynamicRect" type="orange" x="721.333" y="140" width="101.333" height="113.333"/>
-  <object id="67" name="staticRect" x="1292" y="738.667" width="164" height="130.667"/>
-  <object id="68" name="staticRect" x="1474.67" y="606.667" width="910.667" height="156"/>
-  <object id="69" name="staticRect" x="1314.67" y="92" width="33.3333" height="422.667"/>
-  <object id="72" name="dynamicRect" type="purple" x="601.333" y="169.333" width="45.3333" height="88"/>
-  <object id="74" name="staticRect" x="1438.67" y="544" width="101.333" height="57.3333"/>
-  <object id="75" x="1464" y="21.3333"/>
+  <object id="55" name="staticRect" x="2.3333" y="688.667" width="1151.63" height="1.12467"/>
+  <object id="60" name="staticRect" x="1153.29" y="693.125" width="0.5417" height="89.5"/>
+  <object id="61" name="staticRect" x="1153.33" y="783.67" width="195.333" height="0.917"/>
+  <object id="62" name="staticRect" x="1349.36" y="922.637" width="710.091" height="1.08702"/>
+  <object id="66" name="dynamicRect" type="orange" x="994.333" y="525" width="157.333" height="157.333"/>
+  <object id="67" name="staticRect" x="1349.25" y="785.667" width="1.25" height="136.303"/>
+  <object id="68" name="staticRect" x="2056.09" y="750.667" width="793.25" height="2"/>
+  <object id="69" name="staticRect" x="820.003" y="427.333" width="220.667" height="4.00033"/>
+  <object id="72" name="dynamicRect" type="purple" x="588.333" y="299.333" width="156.333" height="157"/>
+  <object id="74" name="staticRect" x="2056.17" y="753.25" width="2.583" height="168.083"/>
  </objectgroup>
- <layer id="4" name="Layer 2" width="200" height="40" opacity="0.82">
+ <layer id="4" name="Layer 2" width="200" height="40" visible="0" opacity="0.82">
   <properties>
    <property name="asdfrteew" value="12345678"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2sVqxVAYReHzRC11d3e31N1dH78LbqGQNqGDCydN1gdrlsE/2QRCQpCUp/ErST/VYx9JPQ6RSshtSJIkSZL0PzXkJOmbm5CyuQ8pm/uQsrkPKZv7kLK5Dyn7Py33Ifkfo5THfajsNv9YWhLch5SWBLehalnJSSqjJmqmFmqlNmqnDupMPes+VDVd1E091Et91E8DNJh61n2oaoZomEZolMZonCZoMvWs+1DVTNE0zdAszdE8LdBixLukIlii5VB7B6zSGq3TRvj9e61UJVuh9g12m3Zol/Zonw7inSUVwiEd0TGd0Cmd0TldRLxLKoJLuqJruqFbuqN7eoh4l1QEj/REz/RCr/RG7/QR8S5JkiRJkiRJkiRJkiTF9Qm10CsN
+   eJztwTEBAAAAwqD1T+1hDaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbn0AAAE=
   </data>
  </layer>
 </map>

@@ -58,7 +58,7 @@ public:
 
 		map = new Map(world);
 		hero = new Hero(world);
-		backgroundColor = sf::Color(80, 80, 80);
+		backgroundColor = sf::Color(249, 139, 9);
 	}
 
 	virtual void handleEvent(sf::Event& e) {
@@ -98,22 +98,22 @@ public:
 					if (mouseXYFirst.x > mouseXY.x && mouseXYFirst.y > mouseXY.y) {
 						rectShift[0] = 10;
 						localWorldColor = "blue";
-						backgroundColor = sf::Color(0, 0, 205);
+						backgroundColor = sf::Color(27, 193, 246);
 					}
 					if (mouseXYFirst.x < mouseXY.x && mouseXYFirst.y > mouseXY.y) {
 						rectShift[1] = 10;
 						localWorldColor = "purple";
-						backgroundColor = sf::Color(178, 34, 34);
+						backgroundColor = sf::Color(177, 13, 253);
 					}
 					if (mouseXYFirst.x > mouseXY.x && mouseXYFirst.y < mouseXY.y) {
 						rectShift[2] = 10;
 						localWorldColor = "pink";
-						backgroundColor = sf::Color(50, 205, 50);
+						backgroundColor = sf::Color(244, 70, 170);
 					}
 					if (mouseXYFirst.x < mouseXY.x && mouseXYFirst.y < mouseXY.y) {
 						rectShift[3] = 10;
 						localWorldColor = "orange";
-						backgroundColor = sf::Color(255, 255, 0);
+						backgroundColor = sf::Color(249, 139, 9);
 					}
 
 					if (mouseXYFirst.x != mouseXYTemp.x && mouseXYTemp.x != mouseXY.x) {
