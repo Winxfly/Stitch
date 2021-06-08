@@ -38,5 +38,17 @@
     <ClInclude Include="MapLoader.h">
       <Filter>Исходные файлы\Logics</Filter>
     </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Исходные файлы\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>Исходные файлы\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuGameState.h">
+      <Filter>Исходные файлы\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGameState.h">
+      <Filter>Исходные файлы\GameStates</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
