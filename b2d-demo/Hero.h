@@ -18,7 +18,6 @@ private:
 		int countPointsContact = 0;
 		for (b2ContactEdge* edge = bodyHero->GetContactList(); edge; edge = edge->next) {
 
-			//b2Fixture* a = edge->contact->GetFixtureA();
 			b2Fixture* fixtureB = edge->contact->GetFixtureB();   // получаем фиксуру второй фигуры(не гг )
 			b2Body* bodyFixture = fixtureB->GetBody();
 			b2Vec2 bodyPosition = bodyFixture->GetPosition();
@@ -40,7 +39,7 @@ private:
 				else {
 					onGround = false;
 				}
-			}
+			} 
 		}
 
 		if (countPointsContact > 2) {
@@ -53,9 +52,6 @@ public:
 	float dx;
 	float dy;
 	bool onGround;
-
-	sf::Clock clock;
-	float dt = clock.restart().asSeconds();
 
 	sf::Sprite* heroSprite;
 
@@ -108,12 +104,12 @@ public:
 	void update() {
 		contact();
 		positions = bodyHero->GetPosition();
-		bodyHero->GetLinearVelocity();
+		linearVelocity = bodyHero->GetLinearVelocity();
 
 		heroRect->left += dx * dt;
 		heroRect->top += dy * dt;
 
-		currentFrame += 133 * dt; // настроить
+		currentFrame += 15.0f * dt; // настроить
 		if (currentFrame > 7) {
 			currentFrame -= 6;
 		}
@@ -136,8 +132,7 @@ public:
 				heroSprite->setTextureRect(sf::IntRect(66 * int(currentFrame) + 66, 0, -66, 97));
 			}
 		}
-
-				
+			
 		heroSprite->setPosition(positions.x, WINDOW_HEIGHT - positions.y);
 		dx = 0;
 	}
@@ -146,13 +141,12 @@ public:
 		dx = -0.1;
 		if (onGround == 1) {
 			if (linearVelocity.x > -20) {
-				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(-500 * 4, 0), true);
-				//hero.bodyM->SetLinearVelocity(b2Vec2(-15.0f, 0));
+				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(-5000 * 4, 0), true);
 			}
 		}
 		else {
 			if (linearVelocity.x > -20) {
-				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(-100 * 4, 0), true);
+				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(-1000 * 4, 0), true);
 			}
 		}
 	}
@@ -160,13 +154,12 @@ public:
 		dx = 0.1;
 		if (onGround) {
 			if (linearVelocity.x < 20) {
-				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(500 * 4, 0), true);
+				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(5000 * 4, 0), true);
 			}
-			//hero.bodyM->SetLinearVelocity(b2Vec2(15.0f, 0));
 		}
 		else {
 			if (linearVelocity.x < 20) {
-				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(100 * 4, 0), true);
+				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(1000 * 4, 0), true);
 			}
 		}
 	}
@@ -178,7 +171,7 @@ public:
 	void heroDown() {
 
 	}
-	void camWidth(sf::View view, float camX, float ddx) {
+	void camWidth(sf::View view, float camX, float ddx, sf::RectangleShape shadow) {
 		if (positions.x - ddx < WINDOW_WIDTH / 2 && ddx >= 0 && linearVelocity.x <= 0) {
 			camX = (positions.x - (WINDOW_WIDTH / 2) - ddx) * dt * 4;
 			//camX = dddds.x * 27 * dt;
@@ -186,6 +179,7 @@ public:
 			if (ddx > 0) {
 
 				view.move(camX, 0);
+				shadow.move(camX, 0);
 
 			}
 			else {
@@ -200,6 +194,7 @@ public:
 			if (ddx > 0) {
 
 				view.move(camX, 0);
+				shadow.move(camX, 0);
 
 			}
 			else {
@@ -208,7 +203,7 @@ public:
 			camX = 0;
 		}
 	}
-	void camHeight(int floorY, sf::View view, float camY, float ddy) {
+	void camHeight(int floorY, sf::View view, float camY, float ddy, sf::RectangleShape shadow) {
 		if (positions.y <= 0 && floorY == 0) {
 			floorY = 1;
 			//view.move(0, MAP_SIZE_HEIGHT - WINDOW_HEIGHT);
@@ -224,6 +219,7 @@ public:
 			if (ddy <= HeightY) {
 
 				view.move(0, camY);
+				shadow.move(0, camY);
 			}
 			else {
 				ddy -= camY;
@@ -235,6 +231,7 @@ public:
 			ddy -= camY;
 			if (ddy > 0) {
 				view.move(0, -camY);
+				shadow.move(0, -camY);
 			}
 			else {
 				ddy += camY;
@@ -246,6 +243,5 @@ public:
 	void draw(sf::RenderWindow* window) {
 		update();
 		window->draw(*heroSprite);
-	}
-	
+	}	
 };

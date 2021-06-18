@@ -15,7 +15,7 @@ private:
 
 	sf::Texture backgroundTexture;
 	sf::Texture startTexture;
-	sf::Texture optionsTexture;
+	//sf::Texture optionsTexture;
 	sf::Texture exitTexture;
 
 public:
@@ -25,7 +25,7 @@ public:
 
 		backgroundTexture.loadFromFile("image/background.png");
 		startTexture.loadFromFile("image/start.png");
-		optionsTexture.loadFromFile("image/options.png");
+		//optionsTexture.loadFromFile("image/options.png");
 		exitTexture.loadFromFile("image/exit.png");
 
 		backgroundShape = new sf::RectangleShape();
@@ -44,13 +44,13 @@ public:
 			int my = e.mouseButton.y;
 
 			if (mx >= SHAPE_WIDTH / 4 && mx <= SHAPE_WIDTH + SHAPE_WIDTH / 4) {
-				if (my >= (WINDOW_HEIGHT / 2) - 3 * SHAPE_HEIGHT / 2 && my <= (WINDOW_HEIGHT / 2) - 3 * SHAPE_HEIGHT / 2 + SHAPE_HEIGHT) {
+				if (my >= (WINDOW_HEIGHT / 2) - 2 * SHAPE_HEIGHT / 2 && my <= (WINDOW_HEIGHT / 2) - 2 * SHAPE_HEIGHT / 2 + SHAPE_HEIGHT) {
 					nextState = GAME_STATE_INFO::MAIN;
 				}
-				else if (my >= (WINDOW_HEIGHT / 2) - 3 * SHAPE_HEIGHT + SHAPE_HEIGHT / 2 && my <= (WINDOW_HEIGHT / 2) - 3 * SHAPE_HEIGHT / 2 + SHAPE_HEIGHT * 2) {
-					//nextState = GAME_STATE_INFO::OPTIONS;
-				}
-				else if (my >= (WINDOW_HEIGHT / 2) - 3 * SHAPE_HEIGHT + (SHAPE_HEIGHT * 2) / 2 && my <= (WINDOW_HEIGHT / 2) - 3 * SHAPE_HEIGHT / 2 + SHAPE_HEIGHT * 3) {
+				//else if (my >= (WINDOW_HEIGHT / 2) - 3 * SHAPE_HEIGHT + SHAPE_HEIGHT / 2 && my <= (WINDOW_HEIGHT / 2) - 3 * SHAPE_HEIGHT / 2 + SHAPE_HEIGHT * 2) {
+				//	//nextState = GAME_STATE_INFO::OPTIONS;
+				//}
+				else if (my >= (WINDOW_HEIGHT / 2) - 2 * SHAPE_HEIGHT + (SHAPE_HEIGHT * 2) / 2 && my <= (WINDOW_HEIGHT / 2) - 2 * SHAPE_HEIGHT / 2 + SHAPE_HEIGHT * 2) {
 					nextState = GAME_STATE_INFO::EXIT;
 				}
 			}
@@ -63,19 +63,16 @@ public:
 
 	virtual void draw(sf::RenderWindow* window) {
 		window->draw(*backgroundShape);
-		for (int i = 0; i < 3; i++) {
-			shape->setPosition(sf::Vector2f(SHAPE_WIDTH / 4, i * SHAPE_HEIGHT + (WINDOW_HEIGHT / 2) - 3 * SHAPE_HEIGHT / 2));
+		for (int i = 0; i < 2; i++) {
+			shape->setPosition(sf::Vector2f(SHAPE_WIDTH / 4, i * SHAPE_HEIGHT + (WINDOW_HEIGHT / 2) - 2 * SHAPE_HEIGHT / 2));
 
 			switch (i) {
 			case 0:
 				shape->setTexture(&startTexture);
 				break;
 			case 1:
-				shape->setTexture(&optionsTexture);
-				break;
-			case 2:
 				shape->setTexture(&exitTexture);
-				break;
+				break;			
 			}
 			window->draw(*shape);
 		}

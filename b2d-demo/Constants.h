@@ -17,3 +17,6 @@ const int MAP_SIZE_HEIGHT = TILE_SIZE * TILES_TOTAL_HEIGHT;
 const int HeightY = MAP_SIZE_HEIGHT - WINDOW_HEIGHT;
 
 const float DEG = 57.29577f;
+
+float dt;
+float timeStep = 1.0f / 60.0f;

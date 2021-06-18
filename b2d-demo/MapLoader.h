@@ -36,6 +36,7 @@ public:
 	sf::Texture rectOrangeTexture;
 	sf::Texture rectPinkTexture;
 
+	sf::RectangleShape shadow;
 	sf::RectangleShape colorOne;
 	sf::RectangleShape colorTwo;
 	sf::RectangleShape colorThree;
@@ -69,6 +70,9 @@ public:
 		rectPurpleTexture.loadFromFile("image/purpleRect.png");
 		rectOrangeTexture.loadFromFile("image/orangeRect.png");
 		rectPinkTexture.loadFromFile("image/pinkRect.png");
+
+		shadow.setFillColor(sf::Color(0, 0, 0, 128));
+		shadow.setSize(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
 
 		colorOne.setPosition(sf::Vector2f(WINDOW_WIDTH / 2 - COLOR_SETTINGS_SIZE, WINDOW_HEIGHT / 2 - COLOR_SETTINGS_SIZE));
 		colorOne.setSize(sf::Vector2f(COLOR_SETTINGS_SIZE, COLOR_SETTINGS_SIZE));
@@ -169,7 +173,7 @@ public:
 					b2Vec2 vertices[8];
 					for (int i = 0; i < pointss.size(); i++) {
 						vertices[i].Set(pointss[i].x + (fff.x - rect[score].left), rect[score].height - pointss[i].y);
-						convex[score].setPoint(i, sf::Vector2f(pointss[i].x + (fff.x - rect[score].left), pointss[i].y));
+						//convex[score].setPoint(i, sf::Vector2f(pointss[i].x + (fff.x - rect[score].left), pointss[i].y));
 					}
 
 					if (objectColor[score] == "blue") {
@@ -244,6 +248,7 @@ public:
 			}
 		}
 		if (isColorChange) {
+			window->draw(shadow);
 			window->draw(colorOne);
 			window->draw(colorTwo);
 			window->draw(colorThree);
