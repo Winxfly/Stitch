@@ -25,16 +25,18 @@ private:
 
 			b2WorldManifold worldManifold;
 			edge->contact->GetWorldManifold(&worldManifold);
-			if (edge->contact->IsTouching() == 0) { onGround = false; }
-			for (int i = 0; i < edge->contact->GetManifold()->pointCount; i++) {
+			if (edge->contact->IsTouching() == 0) {
+				onGround = false;
+			}
 
+			for (int i = 0; i < edge->contact->GetManifold()->pointCount; i++) {
 				b2Vec2 pointsContact = worldManifold.points[i];
 				countPointsContact++;
 
-				if (edge->contact->IsTouching() == 1 && pointsContact.y < positions.y && bodyPosition.y + bodySize.upperBound.y - bodySize.lowerBound.y - 0.1f < pointsContact.y && bodyPosition.x < pointsContact.x && bodyPosition.x + bodySize.upperBound.x - bodySize.lowerBound.x - 0.1f > pointsContact.x) {
+				if (edge->contact->IsTouching() == 1 && pointsContact.y < positions.y && bodyPosition.y + bodySize.upperBound.y - bodySize.lowerBound.y - 0.1f < pointsContact.y &&
+					bodyPosition.x < pointsContact.x && bodyPosition.x + bodySize.upperBound.x - bodySize.lowerBound.x - 0.1f > pointsContact.x) {
 					onGround = true;
 					//std::cout << onGround << "1 | ";   очень сложное и неправильно условие, я засунул в условие проверку на соприкосновение с верхней частью фигуры, а нужно было с нижней частью перса, тебе надо исправить
-
 				}
 				else {
 					onGround = false;
@@ -88,8 +90,8 @@ public:
 		heroSprite->setOrigin(66.0f / 2, 97.0f / 2);
 		heroSprite->setTextureRect(sf::IntRect(66 * int(currentFrame), 0, 66, 97));
 
-		dx = 0;
-		dy = 0;
+		dx = 0.0f;
+		dy = 0.0f;
 		currentFrame = 0;
 		isRight = true;
 		//update(positions);
@@ -134,12 +136,12 @@ public:
 		}
 			
 		heroSprite->setPosition(positions.x, WINDOW_HEIGHT - positions.y);
-		dx = 0;
+		dx = 0.0f;
 	}
 
 	void heroLeft() {
-		dx = -0.1;
-		if (onGround == 1) {
+		dx = -0.1f;
+		if (onGround) {
 			if (linearVelocity.x > -20) {
 				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(-5000 * 4, 0), true);
 			}
@@ -151,7 +153,7 @@ public:
 		}
 	}
 	void heroRight() {
-		dx = 0.1;
+		dx = 0.1f;
 		if (onGround) {
 			if (linearVelocity.x < 20) {
 				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(5000 * 4, 0), true);
@@ -165,17 +167,17 @@ public:
 	}
 	void heroUp() {
 		if (onGround) {
-			bodyHero->ApplyLinearImpulseToCenter(b2Vec2(0, 55000), true);
+			bodyHero->ApplyLinearImpulseToCenter(b2Vec2(0, 200000), true);
 		}
 	}
 	void heroDown() {
 
 	}
-	void camWidth(sf::View view, float camX, float ddx, sf::RectangleShape shadow) {
+	void camWidth(sf::View &view, float &camX, float &ddx, sf::RectangleShape &shadow) {
 		if (positions.x - ddx < WINDOW_WIDTH / 2 && ddx >= 0 && linearVelocity.x <= 0) {
 			camX = (positions.x - (WINDOW_WIDTH / 2) - ddx) * dt * 4;
-			//camX = dddds.x * 27 * dt;
 			ddx += camX;
+
 			if (ddx > 0) {
 
 				view.move(camX, 0);
@@ -189,8 +191,8 @@ public:
 		}
 		if (positions.x - ddx > WINDOW_WIDTH / 2) {
 			camX = (positions.x - (WINDOW_WIDTH / 2) - ddx) * dt * 4;
-			//camX = dddds.x * 27 * dt;
 			ddx += camX;
+
 			if (ddx > 0) {
 
 				view.move(camX, 0);
@@ -203,45 +205,37 @@ public:
 			camX = 0;
 		}
 	}
-	void camHeight(int floorY, sf::View view, float camY, float ddy, sf::RectangleShape shadow) {
-		if (positions.y <= 0 && floorY == 0) {
-			floorY = 1;
-			//view.move(0, MAP_SIZE_HEIGHT - WINDOW_HEIGHT);
-		}
-		else if (positions.y > 0 && floorY == 1) {
-			floorY = 0;
-			//view.move(0, -(MAP_SIZE_HEIGHT - WINDOW_HEIGHT));
-		}
-
-		if (floorY == 1 && ddy <= HeightY) {
-			camY = HeightY * dt * 3;
+	void camHeight(sf::View &view, float &camY, float &ddy, sf::RectangleShape &shadow) {
+		if (positions.y - ddy < WINDOW_HEIGHT / 2) {
+			camY = (positions.y - (WINDOW_HEIGHT / 2) - ddy) * dt * 4;
 			ddy += camY;
-			if (ddy <= HeightY) {
 
-				view.move(0, camY);
-				shadow.move(0, camY);
+			if (ddy < 0) {
+				shadow.move(0, -camY);
+				view.move(0, -camY);
 			}
 			else {
 				ddy -= camY;
 			}
 			camY = 0;
 		}
-		else if (floorY == 0 && ddy >= 0) {
-			camY = HeightY * dt * 3;
-			ddy -= camY;
-			if (ddy > 0) {
-				view.move(0, -camY);
+		else if(positions.y - ddy > WINDOW_HEIGHT / 2) {
+			camY = (positions.y - (WINDOW_HEIGHT / 2) - ddy) * dt * 4;
+			ddy += camY;
+
+			if (ddy < 0) {
 				shadow.move(0, -camY);
+				view.move(0, -camY);
 			}
 			else {
-				ddy += camY;
+				ddy -= camY;
 			}
 			camY = 0;
-		}
+		}			
 	}
 
 	void draw(sf::RenderWindow* window) {
 		update();
 		window->draw(*heroSprite);
-	}	
+	}
 };

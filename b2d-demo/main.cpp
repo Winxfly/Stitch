@@ -25,8 +25,7 @@ b2Vec2 gravity(0.0f, -9.81f);
 b2World world(gravity);
 
 GameState* gameState = new MenuGameState();
-GAME_STATE_INFO selectedMode = GAME_STATE_INFO::MAIN;
-
+GAME_STATE_INFO selectedMode = GAME_STATE_INFO::SHOW_MENU;
 
 void updateGameState(GAME_STATE_INFO nextState) {
 	GameState* newState = nullptr;
@@ -58,32 +57,22 @@ void updateGameState(GAME_STATE_INFO nextState) {
 int main() {
 	srand(time(0));
 
-	int32 velocityIterations = 6;
-	int32 positionIterations = 2;
-
-
-	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Stitch", sf::Style::Close, sf::ContextSettings(0, 0, 0));
-	
+	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Stitch", sf::Style::Close, sf::ContextSettings(0, 0, 0));	
 	sf::Clock clock;
+
 	while (window->isOpen()) {
-
 		dt = clock.restart().asSeconds();
-		//int fps = (int)(1 / dt);
-
-		/*char buff[64];
-		sprintf(buff, "FPS: %d", fps);
-		window->setTitle(buff);*/
-
+		
 		sf::Event e;
 		while (window->pollEvent(e)) {
 			if (e.type == sf::Event::Closed) {
 				window->close();
 			}
-			gameState->handleEvent(e);
 		}
+		gameState->handleEvent(e);
 		updateGameState(gameState->nextGameState());	
 
-		world.Step(timeStep, velocityIterations, positionIterations);
+		world.Step(timeStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
 		window->clear();
 		gameState->draw(window);

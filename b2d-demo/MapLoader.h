@@ -21,8 +21,6 @@ public:
 	b2BodyDef bodyDef;
 	b2Body* body[32];
 
-	sf::View view;
-
 	sf::FloatRect rect[32];
 	sf::ConvexShape convex[32];
 
@@ -45,9 +43,6 @@ public:
 	Map(b2World* world) {
 
 		//reset();
-
-		view = sf::View(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
-		view.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 
 		tmx::setLogLevel(tmx::Logger::Info | tmx::Logger::Error);
 		mapLoader = new tmx::MapLoader("maps/");
@@ -116,7 +111,6 @@ public:
 					body[score]->SetFixedRotation(true);
 
 					convex[score].setPointCount(pointss.size());
-					//convex[score].setFillColor(sf::Color(200, 50, 90));
 					convex[score].setPosition(sf::Vector2f(mapObj->firstPoint()));
 					int d = pointss.size();		
 
@@ -127,19 +121,15 @@ public:
 					}
 
 					if (objectColor[score] == "blue") {
-						//convex[score].setFillColor(sf::Color(27, 193, 246));
 						convex[score].setTexture(&rectBlueTexture);
 					}
 					else if (objectColor[score] == "purple") {
-						//convex[score].setFillColor(sf::Color(177, 13, 253));
 						convex[score].setTexture(&rectPurpleTexture);
 					}
 					else if(objectColor[score] == "pink") {
-						//convex[score].setFillColor(sf::Color(244, 70, 170));
 						convex[score].setTexture(&rectPinkTexture);
 					}
 					else if(objectColor[score] == "orange") {
-						//convex[score].setFillColor(sf::Color(249, 139, 9));
 						convex[score].setTexture(&rectOrangeTexture);
 					}
 					
@@ -205,6 +195,10 @@ public:
 			}			
 		}		
 	}
+	~Map() {
+		delete mapLoader;
+		delete mapObj;
+	}
 	/*void reset() {
 		if (mapLoader != nullptr) {
 			delete mapLoader;
@@ -240,7 +234,6 @@ public:
 
 	void draw(sf::RenderWindow* window) {
 		updateMap();
-		window->setView(view);
 		window->draw(*mapLoader);
 		for (int i = 0; i < objCount; i++) {
 			if (worldColor != objectColor[i] || isColorChange == true) {
@@ -253,7 +246,6 @@ public:
 			window->draw(colorTwo);
 			window->draw(colorThree);
 			window->draw(colorFour);
-			window->setView(window->getDefaultView());
 		}
 	}
 };

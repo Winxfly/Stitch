@@ -8,12 +8,11 @@ private:
 	GAME_STATE_INFO nextState = GAME_STATE_INFO::UNKNOWN;
 
 	sf::View view;
-	int floorY = 0;
-
-	std::string localWorldColor = "gray";
 	sf::Vector2i mouseXYFirst;
 	sf::Vector2i mouseXYTemp;
 	sf::Color backgroundColor;
+
+	std::string localWorldColor = "gray";
 
 	float ddx = 0;
 	float ddy = 0;
@@ -60,6 +59,7 @@ public:
 		}
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || (sf::Keyboard::isKeyPressed(sf::Keyboard::D))) && map->isColorChange == false) {
 			hero->heroRight();
+			std::cout << "yes";
 		}
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || (sf::Keyboard::isKeyPressed(sf::Keyboard::W))) && map->isColorChange == false) {
 			hero->heroUp();
@@ -72,7 +72,7 @@ public:
 		}
 				
 		hero->camWidth(view, camX, ddx, map->shadow);
-		hero->camHeight(floorY, view, camY, ddy, map->shadow);
+		hero->camHeight(view, camY, ddy, map->shadow);
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
@@ -80,7 +80,7 @@ public:
 			map->isColorChange = true;
 
 			if (e.type == sf::Event::MouseMoved) {
-						std::cout << "yes";
+						//std::cout << "yes";
 				sf::Vector2i mouseXY = sf::Mouse::getPosition();
 				for (int i = 0; i < 4; i++) {
 					rectShift[i] = 0;

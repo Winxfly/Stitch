@@ -16,7 +16,10 @@ const int MAP_SIZE_HEIGHT = TILE_SIZE * TILES_TOTAL_HEIGHT;
 
 const int HeightY = MAP_SIZE_HEIGHT - WINDOW_HEIGHT;
 
+//BOX2D VALUES
 const float DEG = 57.29577f;
+const int32 VELOCITY_ITERATIONS = 6;
+const int32 POSITION_ITERATIONS = 2;
 
 float dt;
 float timeStep = 1.0f / 60.0f;
