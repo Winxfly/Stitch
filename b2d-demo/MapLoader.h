@@ -8,21 +8,16 @@
 
 class Map : public GameState {
 private:
-	tmx::MapLoader* mapLoader;
-
-public:
-	tmx::MapObject* mapObj;
 	int objCount;
-	bool isColorChange = false;
+	bool isColorChange;
 
-	std::string worldColor = "Gray";
-	std::string objectColor[32];
+	tmx::MapLoader* mapLoader;
+	tmx::MapObject* mapObj;
 
 	b2BodyDef bodyDef;
 	b2Body* body[32];
 
-	sf::FloatRect rect[32];
-	sf::ConvexShape convex[32];
+	std::string objectColor[32];
 
 	sf::Texture blueTexture;
 	sf::Texture purpleTexture;
@@ -34,6 +29,12 @@ public:
 	sf::Texture rectOrangeTexture;
 	sf::Texture rectPinkTexture;
 
+public:
+	std::string worldColor = "Gray";
+
+	sf::FloatRect rect[32];
+	sf::ConvexShape convex[32];
+
 	sf::RectangleShape shadow;
 	sf::RectangleShape colorOne;
 	sf::RectangleShape colorTwo;
@@ -41,8 +42,9 @@ public:
 	sf::RectangleShape colorFour;
 	
 	Map(b2World* world) {
-
 		//reset();
+
+		isColorChange = false;
 
 		tmx::setLogLevel(tmx::Logger::Info | tmx::Logger::Error);
 		mapLoader = new tmx::MapLoader("maps/");
@@ -105,7 +107,7 @@ public:
 					sf::Vector2f fff = mapObj->firstPoint();
 					bodyDef.position.Set(rect[score].left, WINDOW_HEIGHT - rect[score].top - rect[score].height);
 
-					b2PolygonShape dynamicMario2;
+					b2PolygonShape polygonShape;
 					
 					body[score] = world->CreateBody(&bodyDef);
 					body[score]->SetFixedRotation(true);
@@ -133,13 +135,13 @@ public:
 						convex[score].setTexture(&rectOrangeTexture);
 					}
 					
-					dynamicMario2.Set(vertices, pointss.size());
+					polygonShape.Set(vertices, pointss.size());
 
-					b2FixtureDef fixtureDefM2;
-					fixtureDefM2.shape = &dynamicMario2;
-					fixtureDefM2.density = 0.3f;
-					fixtureDefM2.friction = 1.3f;
-					body[score]->CreateFixture(&fixtureDefM2);
+					b2FixtureDef fixtureDef;
+					fixtureDef.shape = &polygonShape;
+					fixtureDef.density = 0.3f;
+					fixtureDef.friction = 1.3f;
+					body[score]->CreateFixture(&fixtureDef);
 
 					score++;				
 				}
@@ -153,8 +155,8 @@ public:
 					sf::Vector2f fff = mapObj->firstPoint();
 					bodyDef.position.Set(rect[score].left, WINDOW_HEIGHT - rect[score].top - rect[score].height);
 
-					b2PolygonShape dynamicMario2;
-					dynamicMario2.SetAsBox(rect[score].width / 2, rect[score].height / 2);
+					b2PolygonShape polygonShape;
+					polygonShape.SetAsBox(rect[score].width / 2, rect[score].height / 2);
 
 					convex[score].setPointCount(pointss.size());
 					convex[score].setFillColor(sf::Color(0, 0, 0, 0));
@@ -179,17 +181,16 @@ public:
 						convex[score].setFillColor(sf::Color(255, 255, 0));
 					}
 
-					dynamicMario2.Set(vertices, pointss.size());
+					polygonShape.Set(vertices, pointss.size());
 
 					body[score] = world->CreateBody(&bodyDef);
 					body[score]->SetFixedRotation(true);
 
-					b2FixtureDef fixtureDefM2;
-
-					fixtureDefM2.shape = &dynamicMario2;
-					fixtureDefM2.density = 10.0f;
-					fixtureDefM2.friction = 1.3f;
-					body[score]->CreateFixture(&fixtureDefM2);
+					b2FixtureDef fixtureDef;
+					fixtureDef.shape = &polygonShape;
+					fixtureDef.density = 10.0f;
+					fixtureDef.friction = 1.3f;
+					body[score]->CreateFixture(&fixtureDef);
 					score++;
 				}
 			}			
@@ -202,12 +203,19 @@ public:
 	/*void reset() {
 		if (mapLoader != nullptr) {
 			delete mapLoader;
+			delete mapObj;
 		}
 		updateMap();
 	}*/
 
-	void updateMap() {
+	bool getIsColorChange() {
+		return isColorChange;
+	}
+	void setIsColorChange(bool isColorChange) {
+		this->isColorChange = isColorChange;
+	}
 
+	void updateMap() {
 		for (int i = 0; i < objCount; i++) {
 			b2Vec2 positionBlock = body[i]->GetPosition();
 			sf::Color color = convex[i].getFillColor();
@@ -224,11 +232,7 @@ public:
 				color.a = 255;
 				convex[i].setFillColor(color);
 			}
-
-			//sprites.setPosition(positionBlock.x, WINDOW_HEIGHT - positionBlock.y);
-			//rectangle4[i].setPosition(sf::Vector2f(positionBlock.x, WINDOW_HEIGHT - positionBlock.y));
 			convex[i].setPosition(sf::Vector2f(positionBlock.x, WINDOW_HEIGHT - positionBlock.y - rect[i].height));
-
 		}
 	}
 

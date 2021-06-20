@@ -126,6 +126,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="Helpers.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="MainGameState.h" />
     <ClInclude Include="MapLoader.h" />

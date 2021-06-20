@@ -4,12 +4,24 @@
 
 #include "GameState.h"
 #include "Constants.h"
+#include "Helpers.h"
 
 class Hero : public GameState {
 private:
 	float currentFrame;
+	float dx;
+	float dy;
+
+	bool onGround;
 	bool isRight;
 
+	b2BodyDef bodyDefHero;
+	b2Body* bodyHero;
+
+	b2Vec2 linearVelocity;
+	b2Vec2 positions;
+
+	sf::Sprite* heroSprite;
 	sf::FloatRect *heroRect;
 	sf::Texture *heroTexture;
 
@@ -49,20 +61,43 @@ private:
 		}
 		countPointsContact = 0;
 	}
+	void update() {
+		contact();
+		positions = bodyHero->GetPosition();
+		linearVelocity = bodyHero->GetLinearVelocity();
+
+		heroRect->left += dx * dt;
+		heroRect->top += dy * dt;
+
+		currentFrame += 13.5f * dt; // настроить
+		if (currentFrame > 7) {
+			currentFrame -= 6;
+		}
+
+		if (dx > 0) {
+			heroSprite->setTextureRect(sf::IntRect(66 * int(currentFrame), 0, 66, 97));
+			isRight = true;
+		}
+		else if (dx < 0) {
+			heroSprite->setTextureRect(sf::IntRect(66 * int(currentFrame) + 66, 0, -66, 97));
+			isRight = false;
+		}
+		else {
+			if (isRight) {
+				currentFrame = 0;
+				heroSprite->setTextureRect(sf::IntRect(66 * int(currentFrame), 0, 66, 97));
+			}
+			else {
+				currentFrame = 0;
+				heroSprite->setTextureRect(sf::IntRect(66 * int(currentFrame) + 66, 0, -66, 97));
+			}
+		}
+
+		heroSprite->setPosition(positions.x, WINDOW_HEIGHT - positions.y);
+		dx = 0.0f;
+	}
 
 public:
-	float dx;
-	float dy;
-	bool onGround;
-
-	sf::Sprite* heroSprite;
-
-	b2BodyDef bodyDefHero;
-	b2Body* bodyHero;
-
-	b2Vec2 positions;
-	b2Vec2 linearVelocity;
-
 	Hero(b2World* world) {
 		//BOX2D
 		bodyDefHero.type = b2_dynamicBody;
@@ -92,7 +127,7 @@ public:
 
 		dx = 0.0f;
 		dy = 0.0f;
-		currentFrame = 0;
+		currentFrame = 0.0f;
 		isRight = true;
 		//update(positions);
 	}
@@ -103,40 +138,9 @@ public:
 	}
 
 	//Public methods
-	void update() {
-		contact();
-		positions = bodyHero->GetPosition();
-		linearVelocity = bodyHero->GetLinearVelocity();
 
-		heroRect->left += dx * dt;
-		heroRect->top += dy * dt;
-
-		currentFrame += 15.0f * dt; // настроить
-		if (currentFrame > 7) {
-			currentFrame -= 6;
-		}
-
-		if (dx > 0) {
-			heroSprite->setTextureRect(sf::IntRect(66 * int(currentFrame), 0, 66, 97));
-			isRight = true;
-		}
-		else if (dx < 0) {
-			heroSprite->setTextureRect(sf::IntRect(66 * int(currentFrame) + 66, 0, -66, 97));
-			isRight = false;
-		}
-		else {
-			if (isRight) {
-				currentFrame = 0;
-				heroSprite->setTextureRect(sf::IntRect(66 * int(currentFrame), 0, 66, 97));
-			}
-			else {
-				currentFrame = 0;
-				heroSprite->setTextureRect(sf::IntRect(66 * int(currentFrame) + 66, 0, -66, 97));
-			}
-		}
-			
-		heroSprite->setPosition(positions.x, WINDOW_HEIGHT - positions.y);
-		dx = 0.0f;
+	b2Vec2 getPosition() {
+		return positions;
 	}
 
 	void heroLeft() {

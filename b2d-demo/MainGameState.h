@@ -23,11 +23,11 @@ private:
 	float camX = 0;
 	float camY = 0;
 
+	int rectShift[4];
+
 	Map* map = nullptr;
 	Hero* hero = nullptr;
 public:
-
-	int rectShift[4];
 
 	MainGameState(b2World* world) {
 	    view = sf::View(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
@@ -54,14 +54,13 @@ public:
 
 	virtual void handleEvent(sf::Event& e) {
 		
-		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::A))) && map->isColorChange == false) {
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::A))) && !map->getIsColorChange()) {
 			hero->heroLeft();
 		}
-		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || (sf::Keyboard::isKeyPressed(sf::Keyboard::D))) && map->isColorChange == false) {
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || (sf::Keyboard::isKeyPressed(sf::Keyboard::D))) && !map->getIsColorChange()) {
 			hero->heroRight();
-			std::cout << "yes";
 		}
-		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || (sf::Keyboard::isKeyPressed(sf::Keyboard::W))) && map->isColorChange == false) {
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || (sf::Keyboard::isKeyPressed(sf::Keyboard::W))) && !map->getIsColorChange()) {
 			hero->heroUp();
 		}
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || (sf::Keyboard::isKeyPressed(sf::Keyboard::S)))) {
@@ -77,7 +76,7 @@ public:
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
 			timeStep = 1.0f / 1500.0f;
-			map->isColorChange = true;
+			map->setIsColorChange(true);
 
 			if (e.type == sf::Event::MouseMoved) {
 						//std::cout << "yes";
@@ -120,7 +119,7 @@ public:
 		}
 		else {
 			timeStep = 1.0f / 60.0f;
-			map->isColorChange = false;
+			map->setIsColorChange(false);
 			mouseXYFirst = sf::Mouse::getPosition();
 
 			map->worldColor = localWorldColor;
@@ -136,11 +135,11 @@ public:
 		window->setView(view);
 
 		map->draw(window);
-		if (map->isColorChange) {
-			map->colorOne.setPosition(sf::Vector2f(hero->positions.x - COLOR_SETTINGS_SIZE - rectShift[0], WINDOW_HEIGHT - hero->positions.y - COLOR_SETTINGS_SIZE - rectShift[0]));
-			map->colorTwo.setPosition(sf::Vector2f(hero->positions.x + rectShift[1], WINDOW_HEIGHT - hero->positions.y - COLOR_SETTINGS_SIZE - rectShift[1]));
-			map->colorThree.setPosition(sf::Vector2f(hero->positions.x - COLOR_SETTINGS_SIZE - rectShift[2], WINDOW_HEIGHT - hero->positions.y + rectShift[2]));
-			map->colorFour.setPosition(sf::Vector2f(hero->positions.x + rectShift[3], WINDOW_HEIGHT - hero->positions.y + rectShift[3]));
+		if (map->getIsColorChange()) {
+			map->colorOne.setPosition(sf::Vector2f(hero->getPosition().x - COLOR_SETTINGS_SIZE - rectShift[0], WINDOW_HEIGHT - hero->getPosition().y - COLOR_SETTINGS_SIZE - rectShift[0]));
+			map->colorTwo.setPosition(sf::Vector2f(hero->getPosition().x + rectShift[1], WINDOW_HEIGHT - hero->getPosition().y - COLOR_SETTINGS_SIZE - rectShift[1]));
+			map->colorThree.setPosition(sf::Vector2f(hero->getPosition().x - COLOR_SETTINGS_SIZE - rectShift[2], WINDOW_HEIGHT - hero->getPosition().y + rectShift[2]));
+			map->colorFour.setPosition(sf::Vector2f(hero->getPosition().x + rectShift[3], WINDOW_HEIGHT - hero->getPosition().y + rectShift[3]));
 		}
 		hero->draw(window);
 	}

@@ -10,8 +10,6 @@ private:
 
 	sf::RectangleShape* shape;
 	sf::RectangleShape* backgroundShape;
-	const int SHAPE_WIDTH = 160;
-	const int SHAPE_HEIGHT = 80;
 
 	sf::Texture backgroundTexture;
 	sf::Texture startTexture;
