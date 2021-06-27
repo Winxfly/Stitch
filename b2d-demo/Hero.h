@@ -27,10 +27,17 @@ private:
 
 	//Private methods
 	void contact() {
+
+		bool crutch = false;
 		int countPointsContact = 0;
 		for (b2ContactEdge* edge = bodyHero->GetContactList(); edge; edge = edge->next) {
+		
+			b2Fixture* fixtureA = edge->contact->GetFixtureA();
+			b2Body* bodyFixtureA = fixtureA->GetBody();
+			b2Vec2 bodyPositionA = bodyFixtureA->GetPosition();
+			b2AABB bodySizeA = fixtureA->GetAABB(0);
 
-			b2Fixture* fixtureB = edge->contact->GetFixtureB();   // получаем фиксуру второй фигуры(не гг )
+			b2Fixture* fixtureB = edge->contact->GetFixtureB();  
 			b2Body* bodyFixture = fixtureB->GetBody();
 			b2Vec2 bodyPosition = bodyFixture->GetPosition();
 			b2AABB bodySize = fixtureB->GetAABB(0);
@@ -41,25 +48,37 @@ private:
 				onGround = false;
 			}
 
+
+
 			for (int i = 0; i < edge->contact->GetManifold()->pointCount; i++) {
-				b2Vec2 pointsContact = worldManifold.points[i];
+				
+				b2Vec2 pointsContactA = worldManifold.points[0];
+				b2Vec2 pointsContactB = worldManifold.points[1];
 				countPointsContact++;
 
-				if (edge->contact->IsTouching() == 1 && pointsContact.y < positions.y && bodyPosition.y + bodySize.upperBound.y - bodySize.lowerBound.y - 0.1f < pointsContact.y &&
-					bodyPosition.x < pointsContact.x && bodyPosition.x + bodySize.upperBound.x - bodySize.lowerBound.x - 0.1f > pointsContact.x) {
+			   
+				if(edge->contact->IsTouching() == 1 && pointsContactA.y == pointsContactB.y && pointsContactA.y < bodyPosition.y){
+					crutch = true;
 					onGround = true;
-					//std::cout << onGround << "1 | ";   очень сложное и неправильно условие, я засунул в условие проверку на соприкосновение с верхней частью фигуры, а нужно было с нижней частью перса, тебе надо исправить
+					
 				}
 				else {
 					onGround = false;
+					
 				}
 			} 
 		}
-
+		
+		
 		if (countPointsContact > 2) {
 			onGround = true;
 		}
+		else if (countPointsContact == 2 && crutch == true) {
+			onGround = true;
+		}
+		
 		countPointsContact = 0;
+		crutch = false;
 	}
 	void update() {
 		contact();
