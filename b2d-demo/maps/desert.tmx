@@ -38,33 +38,33 @@
   <object id="74" name="staticRect" x="2056.17" y="752.875" width="2.583" height="169.458"/>
   <object id="76" name="staticColor" type="blue" x="829" y="438" width="179" height="242"/>
   <object id="79" x="2848.63" y="753.75" width="1.125" height="35"/>
-  <object id="80" x="2850.25" y="783.75" width="223.609" height="1"/>
-  <object id="81" x="3072.93" y="784.872" width="1" height="127.058"/>
-  <object id="82" x="3074.36" y="910.746" width="287.545" height="1"/>
-  <object id="83" x="3361.19" y="912.045" width="0.727273" height="96.3636"/>
-  <object id="84" x="3362.27" y="1005.73" width="95.7273" height="0.545455"/>
+  <object id="80" name="staticRect" x="2850.25" y="783.75" width="223.609" height="1"/>
+  <object id="81" name="staticRect" x="3072.93" y="784.872" width="1" height="127.058"/>
+  <object id="82" name="staticRect" x="3074.36" y="910.746" width="287.545" height="1"/>
+  <object id="83" name="staticRect" x="3361.19" y="912.045" width="0.727273" height="96.3636"/>
+  <object id="84" name="staticRect" x="3362.27" y="1005.73" width="95.7273" height="0.545455"/>
   <object id="85" x="3457.36" y="1006.43" width="0.665657" height="92.2091"/>
-  <object id="86" x="3458.36" y="1066.73" width="1634.89" height="0.727273"/>
-  <object id="87" x="5093.86" y="878.528" width="0.5" height="243.381"/>
-  <object id="88" x="5094.55" y="878.449" width="901.733" height="0.375"/>
-  <object id="89" x="5987" y="484.75" width="2.5" height="391.75"/>
-  <object id="90" x="5110.18" y="688.455" width="376.818" height="1.54545"/>
-  <object id="91" x="5108" y="321.5" width="1.5" height="366"/>
-  <object id="92" x="5486.86" y="423.5" width="1.63636" height="264.182"/>
-  <object id="93" x="5489.27" y="518.727" width="497.182" height="0.772727"/>
-  <object id="94" x="2944" y="319.667" width="2163.15" height="1.66667"/>
-  <object id="95" x="2944.25" y="285.375" width="1.625" height="33.75"/>
-  <object id="96" x="2208" y="286.25" width="735.375" height="1"/>
-  <object id="97" x="2208" y="289" width="0.666667" height="190.667"/>
-  <object id="98" x="1885.83" y="478.667" width="321.942" height="1"/>
-  <object id="99" x="1885.67" y="232" width="1" height="246.348"/>
-  <object id="100" x="1485.18" y="310.667" width="398.152" height="2"/>
-  <object id="101" x="1483.33" y="310.485" width="1.33333" height="165.515"/>
-  <object id="102" x="1405.33" y="476.667" width="79.2424" height="0.666667"/>
-  <object id="103" x="1405.3" y="294.408" width="0.909091" height="182.113"/>
-  <object id="105" x="1038" y="284.25" width="3" height="141.75"/>
-  <object id="106" x="1042.25" y="303.5" width="362.75" height="2"/>
-  <object id="107" x="819.636" y="312.727" width="1.27273" height="113.636"/>
+  <object id="86" name="staticRect" x="3458.36" y="1066.73" width="1634.89" height="0.727273"/>
+  <object id="87" name="staticRect" x="5093.86" y="878.528" width="0.5" height="243.381"/>
+  <object id="88" name="staticRect" x="5094.55" y="878.449" width="901.733" height="0.375"/>
+  <object id="89" name="staticRect" x="5987" y="484.75" width="2.5" height="391.75"/>
+  <object id="90" name="staticRect" x="5110.18" y="688.455" width="376.818" height="1.54545"/>
+  <object id="91" name="staticRect" x="5108" y="321.5" width="1.5" height="366"/>
+  <object id="92" name="staticRect" x="5486.86" y="423.5" width="1.63636" height="264.182"/>
+  <object id="93" name="staticRect" x="5489.27" y="518.727" width="497.182" height="0.772727"/>
+  <object id="94" name="staticRect" x="2944" y="319.667" width="2163.15" height="1.66667"/>
+  <object id="95" name="staticRect" x="2944.25" y="285.375" width="1.625" height="33.75"/>
+  <object id="96" name="staticRect" x="2208" y="286.25" width="735.375" height="1"/>
+  <object id="97" name="staticRect" x="2208" y="289" width="0.666667" height="190.667"/>
+  <object id="98" name="staticRect" x="1885.83" y="478.667" width="321.942" height="1"/>
+  <object id="99" name="staticRect" x="1885.67" y="232" width="1" height="246.348"/>
+  <object id="100" name="staticRect" x="1485.18" y="310.667" width="398.152" height="2"/>
+  <object id="101" name="staticRect" x="1483.33" y="310.485" width="1.33333" height="165.515"/>
+  <object id="102" name="staticRect" x="1405.33" y="476.667" width="79.2424" height="0.666667"/>
+  <object id="103" name="staticRect" x="1405.3" y="294.408" width="0.909091" height="182.113"/>
+  <object id="105" name="staticRect" x="1038" y="284.25" width="3" height="141.75"/>
+  <object id="106" name="staticRect" x="1042.25" y="303.5" width="362.75" height="2"/>
+  <object id="107" name="staticRect" x="819.636" y="312.727" width="1.27273" height="113.636"/>
   <object id="108" name="staticRect" x="-0.5" y="348.5" width="819.688" height="2"/>
   <object id="109" name="staticRect" x="6.66667" y="350.986" width="1.33333" height="337.014"/>
  </objectgroup>
