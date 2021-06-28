@@ -118,7 +118,7 @@ public:
 			}
 		}
 		else {
-			timeStep = 1.0f / 100.0f;
+			timeStep = 1.0f / 45.0f;
 			map->setIsColorChange(false);
 			mouseXYFirst = sf::Mouse::getPosition();
 

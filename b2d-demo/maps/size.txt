@@ -1,0 +1,22 @@
+HERO SIZE
+60x97 ref
+height max 97
+width max 66
+
+total ref 1
+total run 7
+
+OBJ RECT
+orange 249 139 9
+blue 27 193 246
+purple 175 13 253
+pink 244 70 170
+
+DYNAMIC RECT
+180x189
+
+STATIC RECT
+179x242
+
+STATIC MINI RECT
+180x185
