@@ -36,14 +36,14 @@
   <object id="69" name="staticRect" x="820.003" y="427.333" width="220.667" height="4.00033"/>
   <object id="72" name="dynamicRect" type="purple" x="609.333" y="361.333" width="156" height="156"/>
   <object id="74" name="staticRect" x="2056.17" y="752.875" width="2.583" height="169.458"/>
-  <object id="76" name="staticColor" type="blue" x="829" y="438" width="179" height="242"/>
-  <object id="79" x="2848.63" y="753.75" width="1.125" height="35"/>
+  <object id="76" name="staticRect" type="blue" x="829" y="438" width="179" height="242"/>
+  <object id="79" name="staticRect" x="2848.63" y="753.75" width="1.125" height="35"/>
   <object id="80" name="staticRect" x="2850.25" y="783.75" width="223.609" height="1"/>
   <object id="81" name="staticRect" x="3072.93" y="784.872" width="1" height="127.058"/>
   <object id="82" name="staticRect" x="3074.36" y="910.746" width="287.545" height="1"/>
   <object id="83" name="staticRect" x="3361.19" y="912.045" width="0.727273" height="96.3636"/>
   <object id="84" name="staticRect" x="3362.27" y="1005.73" width="95.7273" height="0.545455"/>
-  <object id="85" x="3457.36" y="1006.43" width="0.665657" height="92.2091"/>
+  <object id="85" name="staticRect" x="3457.36" y="1006.43" width="0.665657" height="92.2091"/>
   <object id="86" name="staticRect" x="3458.36" y="1066.73" width="1634.89" height="0.727273"/>
   <object id="87" name="staticRect" x="5093.86" y="878.528" width="0.5" height="243.381"/>
   <object id="88" name="staticRect" x="5094.55" y="878.449" width="901.733" height="0.375"/>

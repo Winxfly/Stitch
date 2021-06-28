@@ -120,7 +120,7 @@ public:
 	Hero(b2World* world) {
 		//BOX2D
 		bodyDefHero.type = b2_dynamicBody;
-		bodyDefHero.position.Set(150.0f, 600.0f);
+		bodyDefHero.position.Set(150.0f, 300.0f);
 
 		b2PolygonShape dynamicHero;
 		dynamicHero.SetAsBox(66.0f / 2, 97.0f / 2);

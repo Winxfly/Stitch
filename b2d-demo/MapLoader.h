@@ -15,9 +15,9 @@ private:
 	tmx::MapObject* mapObj;
 
 	b2BodyDef bodyDef;
-	b2Body* body[32];
+	b2Body* body[128];
 
-	std::string objectColor[32];
+	std::string objectColor[128];
 
 	sf::Texture blueTexture;
 	sf::Texture purpleTexture;
@@ -32,8 +32,8 @@ private:
 public:
 	std::string worldColor = "Gray";
 
-	sf::FloatRect rect[32];
-	sf::ConvexShape convex[32];
+	sf::FloatRect rect[128];
+	sf::ConvexShape convex[128];
 
 	sf::RectangleShape shadow;
 	sf::RectangleShape colorOne;
