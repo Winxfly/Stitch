@@ -32,14 +32,5 @@
     <ClInclude Include="Constants.h">
       <Filter>Исходные файлы\Base</Filter>
     </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Исходные файлы\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Enums.h">
-      <Filter>Исходные файлы\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuGameState.h">
-      <Filter>Исходные файлы\GameStates</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
