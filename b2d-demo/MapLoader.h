@@ -15,14 +15,24 @@ private:
 	tmx::MapObject* mapObj;
 
 	b2BodyDef bodyDef;
-	b2Body* body[32];
+	b2Body* body[164];
 
-	std::string objectColor[32];
+	std::string objectColor[164];
 
 	sf::Texture blueTexture;
 	sf::Texture purpleTexture;
 	sf::Texture orangeTexture;
 	sf::Texture pinkTexture;
+
+	sf::Texture bluePlusTexture;
+	sf::Texture orangePlusTexture;
+	sf::Texture purplePlusTexture;
+	sf::Texture pinkPlusTexture;
+
+	sf::Texture blueMiniTexture;
+	sf::Texture orangeMiniTexture;
+	sf::Texture purpleMiniTexture;
+	sf::Texture pinkMiniTexture;
 
 	sf::Texture rectBlueTexture;
 	sf::Texture rectPurpleTexture;
@@ -32,8 +42,8 @@ private:
 public:
 	std::string worldColor = "Gray";
 
-	sf::FloatRect rect[32];
-	sf::ConvexShape convex[32];
+	sf::FloatRect rect[164];
+	sf::ConvexShape convex[164];
 
 	sf::RectangleShape shadow;
 	sf::RectangleShape colorOne;
@@ -62,6 +72,16 @@ public:
 		purpleTexture.loadFromFile("image/purple.png");
 		orangeTexture.loadFromFile("image/orange.png");
 		pinkTexture.loadFromFile("image/pink.png");
+
+		bluePlusTexture.loadFromFile("image/staticBlue.png");
+		orangePlusTexture.loadFromFile("image/staticOrange.png");
+		purplePlusTexture.loadFromFile("image/staticPurple.png");
+		pinkPlusTexture.loadFromFile("image/staticPink.png");
+
+		blueMiniTexture.loadFromFile("image/staticMiniBlue.png");
+		orangeMiniTexture.loadFromFile("image/staticMiniOrange.png");
+		purpleMiniTexture.loadFromFile("image/staticMiniPurple.png");
+		pinkMiniTexture.loadFromFile("image/staticMiniPink.png");
 
 		rectBlueTexture.loadFromFile("image/blueRect.png");
 		rectPurpleTexture.loadFromFile("image/purpleRect.png");
@@ -159,26 +179,63 @@ public:
 					polygonShape.SetAsBox(rect[score].width / 2, rect[score].height / 2);
 
 					convex[score].setPointCount(pointss.size());
-					convex[score].setFillColor(sf::Color(0, 0, 0, 0));
+					//convex[score].setFillColor(sf::Color(0, 0, 0, 0));
 					convex[score].setPosition(sf::Vector2f(rect[score].left, rect[score].top));
 
 					b2Vec2 vertices[8];
 					for (int i = 0; i < pointss.size(); i++) {
 						vertices[i].Set(pointss[i].x + (fff.x - rect[score].left), rect[score].height - pointss[i].y);
-						//convex[score].setPoint(i, sf::Vector2f(pointss[i].x + (fff.x - rect[score].left), pointss[i].y));
+						
+					}
+
+					
+
+					polygonShape.Set(vertices, pointss.size());
+
+					body[score] = world->CreateBody(&bodyDef);
+					body[score]->SetFixedRotation(true);
+
+					b2FixtureDef fixtureDef;
+					fixtureDef.shape = &polygonShape;
+					fixtureDef.density = 10.0f;
+					fixtureDef.friction = 1.3f;
+					body[score]->CreateFixture(&fixtureDef);
+					score++;
+				}
+				else if (fc == "staticRectLong") {
+					mapObj = new tmx::MapObject(o);
+					std::vector<sf::Vector2f> pointss = mapObj->polyPoints();
+					rect[score] = sf::FloatRect(mapObj->getAABB());
+					objectColor[score] = o.getType();
+
+					bodyDef.type = b2_staticBody;
+					sf::Vector2f fff = mapObj->firstPoint();
+					bodyDef.position.Set(rect[score].left, WINDOW_HEIGHT - rect[score].top - rect[score].height);
+
+					b2PolygonShape polygonShape;
+					polygonShape.SetAsBox(rect[score].width / 2, rect[score].height / 2);
+
+					convex[score].setPointCount(pointss.size());
+					//convex[score].setFillColor(sf::Color(0, 0, 0, 0));
+					convex[score].setPosition(sf::Vector2f(rect[score].left, rect[score].top));
+
+					b2Vec2 vertices[8];
+					for (int i = 0; i < pointss.size(); i++) {
+						vertices[i].Set(pointss[i].x + (fff.x - rect[score].left), rect[score].height - pointss[i].y);
+						convex[score].setPoint(i, sf::Vector2f(pointss[i].x + (fff.x - rect[score].left), pointss[i].y));
 					}
 
 					if (objectColor[score] == "blue") {
-						convex[score].setFillColor(sf::Color(0, 0, 205));
+						convex[score].setTexture(&bluePlusTexture);
 					}
 					else if (objectColor[score] == "purple") {
-						convex[score].setFillColor(sf::Color(178, 34, 34));
+						convex[score].setTexture(&purplePlusTexture);
 					}
 					else if (objectColor[score] == "pink") {
-						convex[score].setFillColor(sf::Color(50, 205, 50));
+						convex[score].setTexture(&pinkPlusTexture);
 					}
 					else if (objectColor[score] == "orange") {
-						convex[score].setFillColor(sf::Color(255, 255, 0));
+						convex[score].setTexture(&orangePlusTexture);
 					}
 
 					polygonShape.Set(vertices, pointss.size());
@@ -192,6 +249,54 @@ public:
 					fixtureDef.friction = 1.3f;
 					body[score]->CreateFixture(&fixtureDef);
 					score++;
+				}
+				else if (fc == "staticRectShort") {
+				mapObj = new tmx::MapObject(o);
+				std::vector<sf::Vector2f> pointss = mapObj->polyPoints();
+				rect[score] = sf::FloatRect(mapObj->getAABB());
+				objectColor[score] = o.getType();
+
+				bodyDef.type = b2_staticBody;
+				sf::Vector2f fff = mapObj->firstPoint();
+				bodyDef.position.Set(rect[score].left, WINDOW_HEIGHT - rect[score].top - rect[score].height);
+
+				b2PolygonShape polygonShape;
+				polygonShape.SetAsBox(rect[score].width / 2, rect[score].height / 2);
+
+				convex[score].setPointCount(pointss.size());
+				//convex[score].setFillColor(sf::Color(0, 0, 0, 0));
+				convex[score].setPosition(sf::Vector2f(rect[score].left, rect[score].top));
+
+				b2Vec2 vertices[8];
+				for (int i = 0; i < pointss.size(); i++) {
+					vertices[i].Set(pointss[i].x + (fff.x - rect[score].left), rect[score].height - pointss[i].y);
+					convex[score].setPoint(i, sf::Vector2f(pointss[i].x + (fff.x - rect[score].left), pointss[i].y));
+				}
+
+				if (objectColor[score] == "blue") {
+					convex[score].setTexture(&blueMiniTexture);
+				}
+				else if (objectColor[score] == "orange") {
+					convex[score].setTexture(&orangeMiniTexture);
+				}
+				else if (objectColor[score] == "pink") {
+					convex[score].setTexture(&pinkMiniTexture);
+				}
+				else if (objectColor[score] == "purple") {
+					convex[score].setTexture(&purpleMiniTexture);
+				}
+
+				polygonShape.Set(vertices, pointss.size());
+
+				body[score] = world->CreateBody(&bodyDef);
+				body[score]->SetFixedRotation(true);
+
+				b2FixtureDef fixtureDef;
+				fixtureDef.shape = &polygonShape;
+				fixtureDef.density = 10.0f;
+				fixtureDef.friction = 1.3f;
+				body[score]->CreateFixture(&fixtureDef);
+				score++;
 				}
 			}			
 		}		
@@ -239,13 +344,18 @@ public:
 	void draw(sf::RenderWindow* window) {
 		updateMap();
 		window->draw(*mapLoader);
+		
+		if (isColorChange) {
+			window->draw(shadow);
+			
+		}
 		for (int i = 0; i < objCount; i++) {
 			if (worldColor != objectColor[i] || isColorChange == true) {
 				window->draw(convex[i]);
 			}
 		}
 		if (isColorChange) {
-			window->draw(shadow);
+			
 			window->draw(colorOne);
 			window->draw(colorTwo);
 			window->draw(colorThree);
