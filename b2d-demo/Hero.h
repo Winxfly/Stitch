@@ -25,6 +25,8 @@ private:
 	sf::FloatRect *heroRect;
 	sf::Texture *heroTexture;
 
+	b2FixtureDef fixtureDefHero;
+
 	//Private methods
 	void contact() {
 
@@ -128,7 +130,7 @@ public:
 		bodyHero = world->CreateBody(&bodyDefHero);
 		bodyHero->SetFixedRotation(true);
 
-		b2FixtureDef fixtureDefHero;
+		
 		fixtureDefHero.shape = &dynamicHero;
 		fixtureDefHero.density = 1.0f;
 		fixtureDefHero.friction = 1.3f;
@@ -163,10 +165,14 @@ public:
 	}
 
 	void heroLeft() {
+		
+	
 		dx = -0.1f;
 		if (onGround) {
 			if (linearVelocity.x > -20) {
+
 				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(-5000 * 4, 0), true);
+				
 			}
 		}
 		else {
@@ -180,6 +186,7 @@ public:
 		if (onGround) {
 			if (linearVelocity.x < 20) {
 				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(5000 * 4, 0), true);
+				
 			}
 		}
 		else {
