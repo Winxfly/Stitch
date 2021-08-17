@@ -18,6 +18,8 @@ private:
 	b2BodyDef bodyDefHero;
 	b2Body* bodyHero;
 
+	b2FixtureDef fixtureDefHero;
+
 	b2Vec2 linearVelocity;
 	b2Vec2 positions;
 
@@ -48,28 +50,22 @@ private:
 				onGround = false;
 			}
 
-
-
 			for (int i = 0; i < edge->contact->GetManifold()->pointCount; i++) {
 				
 				b2Vec2 pointsContactA = worldManifold.points[0];
 				b2Vec2 pointsContactB = worldManifold.points[1];
 				countPointsContact++;
-
-			   
+		   
 				if(edge->contact->IsTouching() == 1 && pointsContactA.y == pointsContactB.y && pointsContactA.y < bodyPosition.y){
 					crutch = true;
 					onGround = true;
-					
 				}
 				else {
-					onGround = false;
-					
+					onGround = false;				
 				}
 			} 
 		}
-		
-		
+			
 		if (countPointsContact > 2) {
 			onGround = true;
 		}
@@ -128,7 +124,6 @@ public:
 		bodyHero = world->CreateBody(&bodyDefHero);
 		bodyHero->SetFixedRotation(true);
 
-		b2FixtureDef fixtureDefHero;
 		fixtureDefHero.shape = &dynamicHero;
 		fixtureDefHero.density = 1.0f;
 		fixtureDefHero.friction = 1.3f;
