@@ -112,9 +112,11 @@ public:
 		objCount = layers[2].objects.size() - 1;
 
 		for (const auto& l : layers)
-		{					
+		{			
+
 			for (const auto& o : l.objects)
 			{
+				
 				std::string fc = o.getName();				
 				if (fc == "dynamicRect") {
 					mapObj = new tmx::MapObject(o);
@@ -259,6 +261,57 @@ public:
 				bodyDef.type = b2_staticBody;
 				sf::Vector2f fff = mapObj->firstPoint();
 				bodyDef.position.Set(rect[score].left, WINDOW_HEIGHT - rect[score].top - rect[score].height);
+
+				b2PolygonShape polygonShape;
+				polygonShape.SetAsBox(rect[score].width / 2, rect[score].height / 2);
+
+				convex[score].setPointCount(pointss.size());
+				//convex[score].setFillColor(sf::Color(0, 0, 0, 0));
+				convex[score].setPosition(sf::Vector2f(rect[score].left, rect[score].top));
+
+				b2Vec2 vertices[8];
+				for (int i = 0; i < pointss.size(); i++) {
+					vertices[i].Set(pointss[i].x + (fff.x - rect[score].left), rect[score].height - pointss[i].y);
+					convex[score].setPoint(i, sf::Vector2f(pointss[i].x + (fff.x - rect[score].left), pointss[i].y));
+				}
+
+				if (objectColor[score] == "blue") {
+					convex[score].setTexture(&blueMiniTexture);
+				}
+				else if (objectColor[score] == "orange") {
+					convex[score].setTexture(&orangeMiniTexture);
+				}
+				else if (objectColor[score] == "pink") {
+					convex[score].setTexture(&pinkMiniTexture);
+				}
+				else if (objectColor[score] == "purple") {
+					convex[score].setTexture(&purpleMiniTexture);
+				}
+
+				polygonShape.Set(vertices, pointss.size());
+
+				body[score] = world->CreateBody(&bodyDef);
+				body[score]->SetFixedRotation(true);
+
+				b2FixtureDef fixtureDef;
+				fixtureDef.shape = &polygonShape;
+				fixtureDef.density = 10.0f;
+				fixtureDef.friction = 1.3f;
+				body[score]->CreateFixture(&fixtureDef);
+				score++;
+				}
+				else if (fc == "staticRectAngle") {
+				mapObj = new tmx::MapObject(o);
+				std::vector<sf::Vector2f> pointss = mapObj->polyPoints();
+				rect[score] = sf::FloatRect(mapObj->getAABB());
+				objectColor[score] = o.getType();
+
+				sf::Vector2f ff = mapObj->firstPoint();
+				
+				
+				bodyDef.type = b2_staticBody;
+				sf::Vector2f fff = mapObj->firstPoint();
+				bodyDef.position.Set(rect[score].left, WINDOW_HEIGHT - rect[score].top - rect[score].height - (ff.y - rect[score].top));
 
 				b2PolygonShape polygonShape;
 				polygonShape.SetAsBox(rect[score].width / 2, rect[score].height / 2);

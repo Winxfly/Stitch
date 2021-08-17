@@ -18,14 +18,14 @@ private:
 	b2BodyDef bodyDefHero;
 	b2Body* bodyHero;
 
-	b2FixtureDef fixtureDefHero;
-
 	b2Vec2 linearVelocity;
 	b2Vec2 positions;
 
 	sf::Sprite* heroSprite;
 	sf::FloatRect *heroRect;
 	sf::Texture *heroTexture;
+
+	b2FixtureDef fixtureDefHero;
 
 	//Private methods
 	void contact() {
@@ -50,22 +50,28 @@ private:
 				onGround = false;
 			}
 
+
+
 			for (int i = 0; i < edge->contact->GetManifold()->pointCount; i++) {
 				
 				b2Vec2 pointsContactA = worldManifold.points[0];
 				b2Vec2 pointsContactB = worldManifold.points[1];
 				countPointsContact++;
-		   
+
+			   
 				if(edge->contact->IsTouching() == 1 && pointsContactA.y == pointsContactB.y && pointsContactA.y < bodyPosition.y){
 					crutch = true;
 					onGround = true;
+					
 				}
 				else {
-					onGround = false;				
+					onGround = false;
+					
 				}
 			} 
 		}
-			
+		
+		
 		if (countPointsContact > 2) {
 			onGround = true;
 		}
@@ -124,6 +130,7 @@ public:
 		bodyHero = world->CreateBody(&bodyDefHero);
 		bodyHero->SetFixedRotation(true);
 
+		
 		fixtureDefHero.shape = &dynamicHero;
 		fixtureDefHero.density = 1.0f;
 		fixtureDefHero.friction = 1.3f;
@@ -158,10 +165,14 @@ public:
 	}
 
 	void heroLeft() {
+		
+	
 		dx = -0.1f;
 		if (onGround) {
 			if (linearVelocity.x > -20) {
+
 				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(-5000 * 4, 0), true);
+				
 			}
 		}
 		else {
@@ -175,6 +186,7 @@ public:
 		if (onGround) {
 			if (linearVelocity.x < 20) {
 				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(5000 * 4, 0), true);
+				
 			}
 		}
 		else {
