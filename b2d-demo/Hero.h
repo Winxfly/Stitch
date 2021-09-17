@@ -29,7 +29,6 @@ private:
 
 	//Private methods
 	void contact() {
-
 		bool crutch = false;
 		int countPointsContact = 0;
 		for (b2ContactEdge* edge = bodyHero->GetContactList(); edge; edge = edge->next) {
@@ -50,28 +49,22 @@ private:
 				onGround = false;
 			}
 
-
-
 			for (int i = 0; i < edge->contact->GetManifold()->pointCount; i++) {
 				
 				b2Vec2 pointsContactA = worldManifold.points[0];
 				b2Vec2 pointsContactB = worldManifold.points[1];
 				countPointsContact++;
-
-			   
+		   
 				if(edge->contact->IsTouching() == 1 && pointsContactA.y == pointsContactB.y && pointsContactA.y < bodyPosition.y){
 					crutch = true;
-					onGround = true;
-					
+					onGround = true;				
 				}
 				else {
-					onGround = false;
-					
+					onGround = false;					
 				}
 			} 
 		}
-		
-		
+				
 		if (countPointsContact > 2) {
 			onGround = true;
 		}
@@ -129,7 +122,6 @@ public:
 
 		bodyHero = world->CreateBody(&bodyDefHero);
 		bodyHero->SetFixedRotation(true);
-
 		
 		fixtureDefHero.shape = &dynamicHero;
 		fixtureDefHero.density = 1.0f;
@@ -164,15 +156,11 @@ public:
 		return positions;
 	}
 
-	void heroLeft() {
-		
-	
+	void heroLeft() {	
 		dx = -0.1f;
 		if (onGround) {
 			if (linearVelocity.x > -20) {
-
-				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(-5000 * 4, 0), true);
-				
+				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(-5000 * 4, 0), true);			
 			}
 		}
 		else {
@@ -185,8 +173,7 @@ public:
 		dx = 0.1f;
 		if (onGround) {
 			if (linearVelocity.x < 20) {
-				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(5000 * 4, 0), true);
-				
+				bodyHero->ApplyLinearImpulseToCenter(b2Vec2(5000 * 4, 0), true);			
 			}
 		}
 		else {
@@ -209,10 +196,8 @@ public:
 			ddx += camX;
 
 			if (ddx > 0) {
-
 				view.move(camX, 0);
 				shadow.move(camX, 0);
-
 			}
 			else {
 				ddx -= camX;
@@ -224,10 +209,8 @@ public:
 			ddx += camX;
 
 			if (ddx > 0) {
-
 				view.move(camX, 0);
 				shadow.move(camX, 0);
-
 			}
 			else {
 				ddx -= camX;

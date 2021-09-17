@@ -23,10 +23,11 @@ private:
 	float camX = 0;
 	float camY = 0;
 
-	int rectShift[4];
+	int rectShift[COLORS_TOTAL];
 
 	Map* map = nullptr;
 	Hero* hero = nullptr;
+
 public:
 
 	MainGameState(b2World* world) {
@@ -74,14 +75,12 @@ public:
 		hero->camHeight(view, camY, ddy, map->shadow);
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-
 			timeStep = 1.0f / 1500.0f;
 			map->setIsColorChange(true);
 
 			if (e.type == sf::Event::MouseMoved) {
-						//std::cout << "yes";
 				sf::Vector2i mouseXY = sf::Mouse::getPosition();
-				for (int i = 0; i < 4; i++) {
+				for (int i = 0; i < COLORS_TOTAL; i++) {
 					rectShift[i] = 0;
 				}
 					
@@ -118,7 +117,7 @@ public:
 			}
 		}
 		else {
-			timeStep = 1.0f / 100.0f;
+			timeStep = 1.0f / 30.0f;
 			map->setIsColorChange(false);
 			mouseXYFirst = sf::Mouse::getPosition();
 
