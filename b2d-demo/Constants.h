@@ -1,5 +1,4 @@
 #pragma once
-
 //RENDERING VALUES
 const int WINDOW_WIDTH = 1024;
 const int WINDOW_HEIGHT = 768;
@@ -24,3 +23,5 @@ const int32 POSITION_ITERATIONS = 2;
 const int SHAPE_WIDTH = 160;
 const int SHAPE_HEIGHT = 80;
 
+//COLORS
+const int COLORS_TOTAL = 4;
