@@ -14,8 +14,8 @@
 
 #include "Constants.h"
 #include "GameState.h"
-//#include "Hero.h"
-//#include "MapLoader.h"
+#include "Hero.h"
+#include "MapLoader.h"
 #include "MainGameState.h"
 #include "MenuGameState.h"
 
